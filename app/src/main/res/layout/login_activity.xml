@@ -25,8 +25,8 @@
             android:layout_marginStart="24dp"
             android:layout_marginLeft="24dp"
             android:layout_marginTop="32dp"
-            android:layout_marginEnd="100dp"
-            android:layout_marginRight="100dp"
+            android:layout_marginEnd="150dp"
+            android:layout_marginRight="150dp"
             android:text="Hello there, welcome back"
             android:textColor="#FFFFFF"
             android:textSize="36sp"
@@ -180,7 +180,7 @@
             app:layout_constraintTop_toBottomOf="@+id/constraintLayout5">
 
             <Button
-                android:id="@+id/button2"
+                android:id="@+id/btnSignup"
                 style="?attr/materialButtonOutlinedStyle"
                 android:layout_width="0dp"
                 android:layout_height="0dp"
