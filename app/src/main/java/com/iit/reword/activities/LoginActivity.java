@@ -1,7 +1,5 @@
 package com.iit.reword.activities;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
@@ -10,17 +8,20 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
+import androidx.appcompat.app.AppCompatActivity;
+
 import com.google.android.material.textfield.TextInputLayout;
 import com.iit.reword.R;
 import com.iit.reword.roomdb.DbHandler;
+import com.iit.reword.roomdb.model.User;
 import com.iit.reword.utility.Typewriter;
 
 
-public class LoginActivity extends AppCompatActivity implements TextWatcher{
+public class LoginActivity extends AppCompatActivity implements TextWatcher {
 
     private Typewriter txtWelcome;
-    private Button     btnSignup;
-    private Button     btnLogin;
+    private Button btnSignup;
+    private Button btnLogin;
     private TextInputLayout usernameTextInputLayout;
     private TextInputLayout passwordTextInputLayout;
 
@@ -37,8 +38,8 @@ public class LoginActivity extends AppCompatActivity implements TextWatcher{
     private void setupActivity() {
 
         txtWelcome = findViewById(R.id.txtWelcome);
-        btnSignup  = findViewById(R.id.btnSignup);
-        btnLogin   = findViewById(R.id.btnLogin);
+        btnSignup = findViewById(R.id.btnSignup);
+        btnLogin = findViewById(R.id.btnLogin);
 
         usernameTextInputLayout = findViewById(R.id.usernameTextInputLayout);
         passwordTextInputLayout = findViewById(R.id.passwordTextInputLayout);
@@ -50,10 +51,7 @@ public class LoginActivity extends AppCompatActivity implements TextWatcher{
         txtWelcome.animateText("Hello there, welcome back");
         //txtWelcome.animateText("ආයුබෝවන්, නැවත සාදරයෙන් පිළිගනිමු");
 
-
-
         setupListeners();
-
 
     }
 
@@ -72,30 +70,63 @@ public class LoginActivity extends AppCompatActivity implements TextWatcher{
             @Override
             public void onClick(View view) {
 
-                String username = usernameTextInputLayout.getEditText().getText().toString();
-                String password = passwordTextInputLayout.getEditText().getText().toString();
-
-                if (username.trim().equals("")) {
-                    usernameTextInputLayout.setError("Please enter username");
-                    return;
-                }
-
-                if (password.trim().equals("")) {
-                    passwordTextInputLayout.setError("Please enter password");
-                    return;
-                }
-
-                int isExists = DbHandler.getAppDatabase(LoginActivity.this).userDao().isExistsUsers(username);
-
-                if (isExists != 0){
-                    Toast.makeText(LoginActivity.this, "User login successful",
-                            Toast.LENGTH_LONG).show();
-                }else {
-                    Toast.makeText(LoginActivity.this, "Invalid username or password",
-                            Toast.LENGTH_LONG).show();
-                }
+                validateCredential();
             }
         });
+    }
+
+    private Boolean isValidateUserInputs(String username, String password) {
+
+        if (username.trim().equals("")) {
+            usernameTextInputLayout.setError("Please enter username");
+            return false;
+        }
+
+        if (password.trim().equals("")) {
+            passwordTextInputLayout.setError("Please enter password");
+            return false;
+        }
+
+        return  true;
+    }
+
+    private void validateCredential() {
+
+        String username = usernameTextInputLayout.getEditText().getText().toString();
+        String password = passwordTextInputLayout.getEditText().getText().toString();
+
+
+        if (!isValidateUserInputs(username, password))  {
+            return;
+        }
+
+        int isExists = DbHandler.getAppDatabase(LoginActivity.this).userDao().isExistsUsers(username);
+
+        if (isExists != 0) {
+
+            User user = DbHandler.getAppDatabase(LoginActivity.this).userDao().getUser(username);
+
+            if (user.getPassword().equals(password)) {
+
+                DbHandler.getAppDatabase(LoginActivity.this).userDao().updateUserStatus(username,true);
+
+                Toast.makeText(LoginActivity.this, "User login successful",
+                        Toast.LENGTH_LONG).show();
+
+
+                Intent intent = new Intent(LoginActivity.this, HomeActivity.class);
+                startActivity(intent);
+
+            } else {
+                Toast.makeText(LoginActivity.this, "Invalid username or password",
+                        Toast.LENGTH_LONG).show();
+            }
+
+        } else {
+            Toast.makeText(LoginActivity.this, "Invalid username or password",
+                    Toast.LENGTH_LONG).show();
+        }
+
     }
 
     @Override
