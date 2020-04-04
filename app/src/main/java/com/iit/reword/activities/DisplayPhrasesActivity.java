@@ -22,10 +22,10 @@ public class DisplayPhrasesActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_display_phrases);
 
-        setupview();
+        setupView();
     }
 
-    private void setupview(){
+    private void setupView(){
 
         recyclerView = findViewById(R.id.recycleViewPhrase);
 

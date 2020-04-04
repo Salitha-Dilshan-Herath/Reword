@@ -5,6 +5,7 @@ import androidx.annotation.NonNull;
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.ForeignKey;
+import androidx.room.Ignore;
 import androidx.room.PrimaryKey;
 
 @Entity(tableName = "phrase", foreignKeys = {
@@ -30,6 +31,9 @@ public class Phrase {
     @ColumnInfo(name = "user")
     public String user;
 
+    @Ignore
+    public Boolean isSelected;
+
     public String getPhrase() {
         return phrase;
     }
@@ -44,6 +48,18 @@ public class Phrase {
 
     public void setUser(String user) {
         this.user = user;
+    }
+
+    public Boolean getSelected() {
+        return isSelected;
+    }
+
+    public void setSelected(Boolean selected) {
+        isSelected = selected;
+    }
+
+    public int getPid() {
+        return pid;
     }
 
     @Override
