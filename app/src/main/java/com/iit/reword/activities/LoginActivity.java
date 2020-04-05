@@ -14,6 +14,7 @@ import com.google.android.material.textfield.TextInputLayout;
 import com.iit.reword.R;
 import com.iit.reword.roomdb.DbHandler;
 import com.iit.reword.roomdb.model.User;
+import com.iit.reword.utility.Constant;
 import com.iit.reword.utility.Typewriter;
 
 
@@ -110,9 +111,10 @@ public class LoginActivity extends AppCompatActivity implements TextWatcher {
 
                 DbHandler.getAppDatabase(LoginActivity.this).userDao().updateUserStatus(username,true);
 
+                Constant.LOGGING_USER = user;
+
                 Toast.makeText(LoginActivity.this, "User login successful",
                         Toast.LENGTH_LONG).show();
-
 
                 Intent intent = new Intent(LoginActivity.this, HomeActivity.class);
                 startActivity(intent);

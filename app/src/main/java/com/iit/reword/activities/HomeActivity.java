@@ -19,6 +19,7 @@ public class HomeActivity extends AppCompatActivity {
     private Button btnAddPhrases;
     private Button btnDisplayPhrase;
     private Button btnEditPhrase;
+    private Button btnSubscription;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,8 +36,10 @@ public class HomeActivity extends AppCompatActivity {
         btnAddPhrases    = findViewById(R.id.btnAddPhrases);
         btnDisplayPhrase = findViewById(R.id.btnDisplayPhrase);
         btnEditPhrase    = findViewById(R.id.btnEditPhrases);
+        btnSubscription  = findViewById(R.id.btnSubscription);
 
         setupListeners();
+
     }
 
     private void setupListeners(){
@@ -71,6 +74,15 @@ public class HomeActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+
+        btnSubscription.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(HomeActivity.this, LanguageSubscriptionActivity.class);
+                startActivity(intent);
+            }
+        });
+
     }
 
     private void logoutAlert(){

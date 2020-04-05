@@ -2,6 +2,7 @@ package com.iit.reword.utility;
 
 import android.app.Activity;
 import android.util.Patterns;
+import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 
 public final class Utility {
@@ -15,7 +16,13 @@ public final class Utility {
         InputMethodManager inputMethodManager =
                 (InputMethodManager) activity.getSystemService(
                         Activity.INPUT_METHOD_SERVICE);
-        inputMethodManager.hideSoftInputFromWindow(
-                activity.getCurrentFocus().getWindowToken(), 0);
+
+        View focusedView = activity.getCurrentFocus();
+
+        if (focusedView != null) {
+            inputMethodManager.hideSoftInputFromWindow(focusedView.getWindowToken(),
+                    InputMethodManager.HIDE_NOT_ALWAYS);
+        }
+
     }
 }

@@ -68,6 +68,7 @@ public class Phrase {
                 "pid=" + pid +
                 ", phrase='" + phrase + '\'' +
                 ", user='" + user + '\'' +
+                ", isSelected=" + isSelected +
                 '}';
     }
 }

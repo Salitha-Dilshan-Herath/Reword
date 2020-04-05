@@ -14,6 +14,7 @@ import com.iit.reword.R;
 import com.iit.reword.adapters.PhraseEditAdapter;
 import com.iit.reword.roomdb.DbHandler;
 import com.iit.reword.roomdb.model.Phrase;
+import com.iit.reword.roomdb.model.User;
 import com.iit.reword.utility.Constant;
 import com.iit.reword.utility.EditPhraseRadioClickListener;
 import com.iit.reword.utility.Utility;
@@ -29,8 +30,8 @@ public class EditPhrasesActivity extends AppCompatActivity implements EditPhrase
     private PhraseEditAdapter phraseEditAdapter;
     private List<Phrase> phrases;
     private Phrase selectedPhrase = null;
-    private int selectedIndex = -1;
-    private Boolean isEditMode = false;
+    private int selectedIndex     = -1;
+    private Boolean isEditMode    = false;
 
 
     //MARK: Life Cycle methods
@@ -95,7 +96,6 @@ public class EditPhrasesActivity extends AppCompatActivity implements EditPhrase
         if (exists > 0) {
             Toast.makeText(EditPhrasesActivity.this, updatePhrase + " already exists, Try another phrase",
                     Toast.LENGTH_LONG).show();
-
             return;
         }
 
@@ -104,8 +104,6 @@ public class EditPhrasesActivity extends AppCompatActivity implements EditPhrase
         if (updateRespones > 0) {
 
             resetView();
-//            phrases.clear();
-//            phrases.addAll(DbHandler.getAppDatabase(EditPhrasesActivity.this).phraseDao().getAll(Constant.LOGGING_USER.getUsername()));
 
             phrases.get(selectedIndex).setPhrase(updatePhrase);
             selectedPhrase = phrases.get(selectedIndex);
@@ -120,11 +118,13 @@ public class EditPhrasesActivity extends AppCompatActivity implements EditPhrase
     }
 
     private void resetView() {
+
+        Utility.hideSoftKeyboard(EditPhrasesActivity.this); // hide keyboard
         isEditMode = false; // change edit status
         editTextInputLayout.getEditText().setText(null); // remove exits word
         btnSave.setEnabled(false);
         editTextInputLayout.getEditText().clearFocus();
-        Utility.hideSoftKeyboard(EditPhrasesActivity.this); // hide keyboard
+
     }
 
     @Override
