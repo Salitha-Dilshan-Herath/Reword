@@ -44,6 +44,7 @@ public class LanguageSubscriptionAdapter extends  RecyclerView.Adapter<LanguageS
         TextView textView = holder.name;
         textView.setText(languageDisplay.getName());
         holder.cbSubscription.setTag(position);
+        holder.cbSubscription.setChecked(languageDisplay.isSubscribe());
 
         holder.cbSubscription.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -53,10 +54,10 @@ public class LanguageSubscriptionAdapter extends  RecyclerView.Adapter<LanguageS
 
                 if(cb.isChecked())
                 {
-                    languageDisplayList.get(clickedPos).setSubscribe(false);
+                    languageDisplayList.get(clickedPos).setSubscribe(true);
                 }
                 else {
-                    languageDisplayList.get(clickedPos).setSubscribe(true);
+                    languageDisplayList.get(clickedPos).setSubscribe(false);
                 }
 
             }
@@ -95,5 +96,9 @@ public class LanguageSubscriptionAdapter extends  RecyclerView.Adapter<LanguageS
             name           = view.findViewById(R.id.txtLanguage);
             cbSubscription = view.findViewById(R.id.checkBox);
         }
+    }
+
+    public List<LanguageDisplay> getLanguageDisplayList() {
+        return languageDisplayList;
     }
 }

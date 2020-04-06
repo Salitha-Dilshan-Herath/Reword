@@ -109,7 +109,7 @@ public class LoginActivity extends AppCompatActivity implements TextWatcher {
 
             if (user.getPassword().equals(password)) {
 
-                DbHandler.getAppDatabase(LoginActivity.this).userDao().updateUserStatus(username,true);
+                DbHandler.getAppDatabase(LoginActivity.this).userDao().updateUserStatus(user.getU_id(),true);
 
                 Constant.LOGGING_USER = user;
 

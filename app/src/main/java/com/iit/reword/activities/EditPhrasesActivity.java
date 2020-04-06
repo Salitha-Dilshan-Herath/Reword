@@ -6,6 +6,7 @@ import android.widget.Button;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -53,10 +54,12 @@ public class EditPhrasesActivity extends AppCompatActivity implements EditPhrase
         editTextInputLayout.getEditText().setEnabled(false);
         btnSave.setEnabled(false);
 
-        phrases = DbHandler.getAppDatabase(EditPhrasesActivity.this).phraseDao().getAll(Constant.LOGGING_USER.getUsername());
+        phrases = DbHandler.getAppDatabase(EditPhrasesActivity.this).phraseDao().getAll(Constant.LOGGING_USER.getU_id());
         phraseEditAdapter = new PhraseEditAdapter(phrases, this);
         recyclerView.setAdapter(phraseEditAdapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
+        DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(recyclerView.getContext(), LinearLayoutManager.VERTICAL);
+        recyclerView.addItemDecoration(dividerItemDecoration);
 
         setupListeners();
     }
@@ -82,6 +85,12 @@ public class EditPhrasesActivity extends AppCompatActivity implements EditPhrase
             public void onClick(View view) {
 
                 String updatePhrase = editTextInputLayout.getEditText().getText().toString().trim().toLowerCase();
+
+                if (updatePhrase.equals("")){
+                    Toast.makeText(EditPhrasesActivity.this, "Please enter phrase or word.",
+                            Toast.LENGTH_LONG).show();
+                    return;
+                }
                 updatePhrase(updatePhrase);
 
             }
@@ -91,13 +100,15 @@ public class EditPhrasesActivity extends AppCompatActivity implements EditPhrase
     //MARK: Update database
     private void updatePhrase(String updatePhrase) {
 
-        int exists = DbHandler.getAppDatabase(EditPhrasesActivity.this).phraseDao().isExists(updatePhrase, Constant.LOGGING_USER.getUsername());
+        int exists = DbHandler.getAppDatabase(EditPhrasesActivity.this).phraseDao().isExists(updatePhrase, Constant.LOGGING_USER.getU_id());
 
         if (exists > 0) {
             Toast.makeText(EditPhrasesActivity.this, updatePhrase + " already exists, Try another phrase",
                     Toast.LENGTH_LONG).show();
             return;
         }
+
+
 
         int updateRespones = DbHandler.getAppDatabase(EditPhrasesActivity.this).phraseDao().update(updatePhrase, selectedPhrase.getPid());
 

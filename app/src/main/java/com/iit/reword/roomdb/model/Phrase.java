@@ -11,7 +11,7 @@ import androidx.room.PrimaryKey;
 @Entity(tableName = "phrase", foreignKeys = {
                                                 @ForeignKey(
                                                         entity = User.class,
-                                                        parentColumns = "username",
+                                                        parentColumns = "u_id",
                                                         childColumns = "user",
                                                         onDelete = ForeignKey.CASCADE,
                                                         onUpdate = ForeignKey.CASCADE
@@ -29,7 +29,7 @@ public class Phrase {
     public String phrase;
 
     @ColumnInfo(name = "user")
-    public String user;
+    public int user;
 
     @Ignore
     public Boolean isSelected;
@@ -42,11 +42,11 @@ public class Phrase {
         this.phrase = phrase;
     }
 
-    public String getUser() {
+    public int getUser() {
         return user;
     }
 
-    public void setUser(String user) {
+    public void setUser(int user) {
         this.user = user;
     }
 

@@ -20,6 +20,7 @@ public class HomeActivity extends AppCompatActivity {
     private Button btnDisplayPhrase;
     private Button btnEditPhrase;
     private Button btnSubscription;
+    private Button btnTranslator;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,7 +38,7 @@ public class HomeActivity extends AppCompatActivity {
         btnDisplayPhrase = findViewById(R.id.btnDisplayPhrase);
         btnEditPhrase    = findViewById(R.id.btnEditPhrases);
         btnSubscription  = findViewById(R.id.btnSubscription);
-
+        btnTranslator    = findViewById(R.id.btnTranslator);
         setupListeners();
 
     }
@@ -83,6 +84,16 @@ public class HomeActivity extends AppCompatActivity {
             }
         });
 
+        btnTranslator.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(HomeActivity.this, TranslateActivity.class);
+                startActivity(intent);
+            }
+        });
+
+
+
     }
 
     private void logoutAlert(){
@@ -95,7 +106,7 @@ public class HomeActivity extends AppCompatActivity {
                 new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
 
-                        DbHandler.getAppDatabase(HomeActivity.this).userDao().updateUserStatus(Constant.LOGGING_USER.getUsername(),false);
+                        DbHandler.getAppDatabase(HomeActivity.this).userDao().updateUserStatus(Constant.LOGGING_USER.getU_id(),false);
 
                         Intent intent = new Intent(HomeActivity.this, LoginActivity.class);
                         startActivity(intent);

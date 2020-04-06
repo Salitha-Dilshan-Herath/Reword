@@ -1,6 +1,7 @@
 package com.iit.reword.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -29,7 +30,7 @@ public class DisplayPhrasesActivity extends AppCompatActivity {
 
         recyclerView = findViewById(R.id.recycleViewPhrase);
 
-        List<Phrase> phrases = DbHandler.getAppDatabase(DisplayPhrasesActivity.this).phraseDao().getAll(Constant.LOGGING_USER.getUsername());
+        List<Phrase> phrases = DbHandler.getAppDatabase(DisplayPhrasesActivity.this).phraseDao().getAll(Constant.LOGGING_USER.getU_id());
 
         PhraseDisplayAdapter phraseDisplayAdapter = new PhraseDisplayAdapter(phrases);
 
@@ -37,7 +38,9 @@ public class DisplayPhrasesActivity extends AppCompatActivity {
 
         recyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
 
+        DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(recyclerView.getContext(), LinearLayoutManager.VERTICAL);
 
+        recyclerView.addItemDecoration(dividerItemDecoration);
 
     }
 }

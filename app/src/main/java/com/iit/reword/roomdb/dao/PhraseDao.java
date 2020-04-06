@@ -11,11 +11,11 @@ import java.util.List;
 @Dao
 public interface PhraseDao {
 
-    @Query("SELECT COUNT(*) FROM phrase where phrase = :phrase AND user = :user")
-    int isExists(String phrase, String user);
+    @Query("SELECT COUNT(*) FROM phrase where phrase = :phrase AND user = :u_id")
+    int isExists(String phrase, int u_id);
 
     @Query("SELECT * FROM phrase where user = :user ORDER BY phrase ASC")
-    List<Phrase> getAll(String user);
+    List<Phrase> getAll(int user);
 
     @Insert
     long insert(Phrase phrase);

@@ -18,14 +18,14 @@ public interface UserDao {
     @Insert
     long insert(User user);
 
-    @Query("SELECT * FROM user where username = :email")
-    User getUser(String email);
+    @Query("SELECT * FROM user where username = :id")
+    User getUser(String id);
 
     @Query("SELECT * FROM user")
     List<User> getAll();
 
-    @Query("UPDATE USER SET isLogin = :status WHERE username = :user")
-    void updateUserStatus(String user, Boolean status);
+    @Query("UPDATE USER SET isLogin = :status WHERE u_id = :id")
+    void updateUserStatus(int id, Boolean status);
 
     @Query("SELECT * FROM user where isLogin = 1")
     User getLoginUser();

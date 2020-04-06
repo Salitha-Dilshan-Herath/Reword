@@ -61,9 +61,9 @@ public class AddPhrasesActivity extends AppCompatActivity implements TextWatcher
     private void addPhraseToDB(String phrase) {
         Phrase phraseObj = new Phrase();
         phraseObj.setPhrase(phrase);
-        phraseObj.setUser(Constant.LOGGING_USER.getUsername());
+        phraseObj.setUser(Constant.LOGGING_USER.getU_id());
 
-        int isExists = DbHandler.getAppDatabase(AddPhrasesActivity.this).phraseDao().isExists(phrase, Constant.LOGGING_USER.getUsername());
+        int isExists = DbHandler.getAppDatabase(AddPhrasesActivity.this).phraseDao().isExists(phrase, Constant.LOGGING_USER.getU_id());
 
         if (isExists != 0 ) {
             Toast.makeText(AddPhrasesActivity.this, phrase +" already exists, Try another phrase",

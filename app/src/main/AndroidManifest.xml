@@ -13,7 +13,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".activities.LanguageSubscriptionActivity"></activity>
+        <activity android:name=".activities.TranslateActivity"></activity>
+        <activity android:name=".activities.LanguageSubscriptionActivity" />
         <activity android:name=".activities.EditPhrasesActivity" />
         <activity android:name=".activities.DisplayPhrasesActivity" />
         <activity android:name=".activities.AddPhrasesActivity" />
