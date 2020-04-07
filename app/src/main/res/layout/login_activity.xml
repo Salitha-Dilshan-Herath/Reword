@@ -23,10 +23,8 @@
             android:layout_width="0dp"
             android:layout_height="100dp"
             android:layout_marginStart="24dp"
-            android:layout_marginLeft="24dp"
             android:layout_marginTop="32dp"
-            android:layout_marginEnd="150dp"
-            android:layout_marginRight="150dp"
+            android:layout_marginEnd="100dp"
             android:text="Hello there, welcome back"
             android:textColor="#FFFFFF"
             android:textSize="36sp"
@@ -99,7 +97,7 @@
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/constraintLayout2"
-            android:layout_width="409dp"
+            android:layout_width="0dp"
             android:layout_height="0dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHeight_percent="0.5"

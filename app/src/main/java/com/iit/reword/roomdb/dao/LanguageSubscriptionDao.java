@@ -20,4 +20,5 @@ public interface LanguageSubscriptionDao {
 
     @Query("SELECT * FROM language_subscription where user = :u_id")
     List<LanguageSubscription> getAll(int u_id);
+
 }

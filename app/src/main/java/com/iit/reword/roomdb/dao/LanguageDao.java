@@ -19,4 +19,6 @@ public interface LanguageDao {
     @Query("SELECT * FROM language")
     List<Language> getAll();
 
+    @Query("SELECT * FROM language where name = :name")
+    Language get(String name);
 }

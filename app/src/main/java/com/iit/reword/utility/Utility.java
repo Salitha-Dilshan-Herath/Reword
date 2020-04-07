@@ -3,6 +3,8 @@ package com.iit.reword.utility;
 import android.app.Activity;
 import android.util.Patterns;
 import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.RotateAnimation;
 import android.view.inputmethod.InputMethodManager;
 
 public final class Utility {
@@ -24,5 +26,15 @@ public final class Utility {
                     InputMethodManager.HIDE_NOT_ALWAYS);
         }
 
+    }
+
+    public static Animation refreshAnimation() {
+        Animation animation = new RotateAnimation(0.0f, 360.0f,
+                Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF,
+                0.5f);
+        animation.setRepeatCount(-1);
+        animation.setDuration(2000);
+
+        return  animation;
     }
 }

@@ -131,7 +131,7 @@
                         app:layout_constraintStart_toStartOf="parent">
 
                         <Button
-                            android:id="@+id/button"
+                            android:id="@+id/btnTranslate"
                             android:layout_width="0dp"
                             android:layout_height="0dp"
                             android:background="#00BCD4"
@@ -141,8 +141,26 @@
                             app:backgroundTint="#00BCD4"
                             app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintHorizontal_bias="1.0"
                             app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toTopOf="parent" />
+                            app:layout_constraintTop_toTopOf="parent"
+                            app:layout_constraintVertical_bias="1.0" />
+
+                        <ImageView
+                            android:id="@+id/imgRefresh"
+                            android:layout_width="0dp"
+                            android:layout_height="0dp"
+                            android:elevation="2dp"
+                            android:padding="15dp"
+                            app:layout_constraintBottom_toBottomOf="parent"
+
+
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+
+                            app:layout_constraintTop_toTopOf="parent"
+                            app:srcCompat="@drawable/refresh" />
+
                     </androidx.constraintlayout.widget.ConstraintLayout>
 
                     <androidx.constraintlayout.widget.ConstraintLayout
@@ -185,6 +203,23 @@
                         app:layout_constraintTop_toBottomOf="@+id/constraintLayout23"
                         app:layout_constraintWidth_percent=".4999">
 
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:orientation="vertical"
+                            app:layout_constraintStart_toStartOf="parent"
+                            tools:layout_editor_absoluteY="1dp">
+
+                            <TextView
+                                android:id="@+id/txtTranslatedPhrase"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:fontFamily="@font/baumans"
+                                android:gravity="center"
+                                android:textSize="18sp"
+                                tools:text="sasas" />
+
+                        </LinearLayout>
                     </androidx.constraintlayout.widget.ConstraintLayout>
 
 
@@ -228,7 +263,7 @@
                         android:layout_height="0dp"
                         android:background="#00BCD4"
                         app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintHeight_percent=".18"
+                        app:layout_constraintHeight_percent=".2"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent">
 

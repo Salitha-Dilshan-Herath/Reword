@@ -8,6 +8,7 @@ import android.os.Handler;
 
 import com.ibm.watson.language_translator.v3.model.IdentifiableLanguage;
 import com.ibm.watson.language_translator.v3.model.IdentifiableLanguages;
+import com.ibm.watson.language_translator.v3.model.TranslationResult;
 import com.iit.reword.R;
 import com.iit.reword.roomdb.DbHandler;
 import com.iit.reword.roomdb.model.Language;
@@ -69,5 +70,10 @@ public class LaunchActivity extends AppCompatActivity implements LanguageTransla
         }
 
         System.out.println( DbHandler.getAppDatabase(LaunchActivity.this).languageDao().getAll().size());
+    }
+
+    @Override
+    public void getTranslateResult(TranslationResult result) {
+
     }
 }
