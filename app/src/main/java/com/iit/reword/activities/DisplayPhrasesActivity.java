@@ -32,7 +32,7 @@ public class DisplayPhrasesActivity extends AppCompatActivity {
 
         List<Phrase> phrases = DbHandler.getAppDatabase(DisplayPhrasesActivity.this).phraseDao().getAll(Constant.LOGGING_USER.getU_id());
 
-        PhraseDisplayAdapter phraseDisplayAdapter = new PhraseDisplayAdapter(phrases);
+        PhraseDisplayAdapter phraseDisplayAdapter = new PhraseDisplayAdapter(phrases, null);
 
         recyclerView.setAdapter(phraseDisplayAdapter);
 

@@ -1,7 +1,6 @@
 package com.iit.reword.services;
 
 import android.os.AsyncTask;
-
 import com.ibm.watson.language_translator.v3.model.IdentifiableLanguages;
 import com.iit.reword.utility.LanguageTranslatorServiceImpl;
 
@@ -22,7 +21,6 @@ public class LanguageTranslatorService {
         new LanguageDownloadTask().execute();
     }
 }
-
 
 class LanguageDownloadTask extends AsyncTask<Void, Integer, IdentifiableLanguages> {
 
