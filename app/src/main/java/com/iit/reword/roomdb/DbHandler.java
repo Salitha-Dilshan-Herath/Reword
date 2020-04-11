@@ -9,13 +9,15 @@ import androidx.room.RoomDatabase;
 import com.iit.reword.roomdb.dao.LanguageDao;
 import com.iit.reword.roomdb.dao.LanguageSubscriptionDao;
 import com.iit.reword.roomdb.dao.PhraseDao;
+import com.iit.reword.roomdb.dao.TranslateDao;
 import com.iit.reword.roomdb.dao.UserDao;
 import com.iit.reword.roomdb.model.Language;
 import com.iit.reword.roomdb.model.LanguageSubscription;
 import com.iit.reword.roomdb.model.Phrase;
+import com.iit.reword.roomdb.model.Translate;
 import com.iit.reword.roomdb.model.User;
 
-@Database(entities = {User.class, Phrase.class, Language.class, LanguageSubscription.class}, version = 1)
+@Database(entities = {User.class, Phrase.class, Language.class, LanguageSubscription.class, Translate.class}, version = 1)
 public abstract class DbHandler extends RoomDatabase {
 
     private static DbHandler INSTANCE;
@@ -24,6 +26,7 @@ public abstract class DbHandler extends RoomDatabase {
     public abstract PhraseDao phraseDao();
     public abstract LanguageDao languageDao();
     public abstract LanguageSubscriptionDao languageSubscriptionDao();
+    public abstract TranslateDao translateDao();
 
     public static DbHandler getAppDatabase(Context context) {
         if (INSTANCE == null) {

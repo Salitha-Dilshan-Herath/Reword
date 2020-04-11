@@ -5,6 +5,7 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.room.util.DBUtil;
 
 import android.os.Bundle;
 import android.view.View;
@@ -27,6 +28,7 @@ import com.iit.reword.roomdb.DbHandler;
 import com.iit.reword.roomdb.model.Language;
 import com.iit.reword.roomdb.model.LanguageSubscription;
 import com.iit.reword.roomdb.model.Phrase;
+import com.iit.reword.roomdb.model.Translate;
 import com.iit.reword.services.LanguageTranslatorService;
 import com.iit.reword.services.TextToSpeechService;
 import com.iit.reword.utility.interfaces.AdapterClickListener;
@@ -46,14 +48,17 @@ public class TranslateActivity extends AppCompatActivity implements AdapterClick
     private TextView txtSelectedPhraseText;
     private TextView txtTranslatedPhrase;
     private ImageView imgRefresh;
+    private ImageView imagePronounceRefresh;
     private Button btnTranslate;
     private Button btnSpeech;
+    private Button btnSaveDb;
     private ConstraintLayout constraintViwExtra;
-    private ImageView imagePronounceRefresh;
 
     //MARK: Instance Variables
     private ArrayAdapter adapter;
     private List<LanguageSubscription> languageSubscriptions;
+    private Phrase selectedPhrase;
+    private String selectedLanguageId;
 
     //MARK: Life cycle events
     @Override
@@ -76,6 +81,7 @@ public class TranslateActivity extends AppCompatActivity implements AdapterClick
         constraintViwExtra    = findViewById(R.id.constraintViwExtra);
         btnSpeech             = findViewById(R.id.btnSpeech);
         imagePronounceRefresh = findViewById(R.id.imagePronounceRefresh);
+        btnSaveDb             = findViewById(R.id.btnSaveDb);
 
         constraintViwExtra.setVisibility(View.INVISIBLE);
         imgRefresh.setVisibility(View.INVISIBLE);
@@ -115,6 +121,8 @@ public class TranslateActivity extends AppCompatActivity implements AdapterClick
                 Language language = DbHandler.getAppDatabase(TranslateActivity.this).languageDao().get(selectedLanguage.getName());
 
                 System.out.println(language.getCode());
+                selectedLanguageId = language.getName();
+
                 LanguageTranslatorService.getShareInstance().languageTranslatorServiceImpl = TranslateActivity.this;
 
                 TranslateModel translateModel = new TranslateModel(txtSelectedPhraseText.getText().toString(), language.getCode());
@@ -153,6 +161,39 @@ public class TranslateActivity extends AppCompatActivity implements AdapterClick
             }
         });
 
+        btnSaveDb.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                if (selectedPhrase == null || selectedLanguageId == null)
+                    return;
+
+                Translate translate = new Translate();
+                translate.setP_id(selectedPhrase.pid);
+                translate.setLanguageId(selectedLanguageId);
+                translate.setTranslatePhrase(txtTranslatedPhrase.getText().toString().toLowerCase());
+                translate.setUser(Constant.LOGGING_USER.getU_id());
+
+                int isExistsPhrase = DbHandler.getAppDatabase(TranslateActivity.this).translateDao().isExistsPhrase(translate.getP_id(),translate.getLanguageId(),translate.getUser());
+
+                if (isExistsPhrase > 0){
+                    Toast.makeText(TranslateActivity.this, "Already Save",
+                            Toast.LENGTH_LONG).show();
+                    return;
+                }
+
+                long result = DbHandler.getAppDatabase(TranslateActivity.this).translateDao().insert(translate);
+
+                if(result > 0){
+
+                    Toast.makeText(TranslateActivity.this, "Save successfully",
+                            Toast.LENGTH_LONG).show();
+                } else  {
+                    Toast.makeText(TranslateActivity.this, "Failed save data",
+                            Toast.LENGTH_LONG).show();
+                }
+            }
+        });
     }
 
     //MARK: Load Data to spinner
@@ -183,6 +224,7 @@ public class TranslateActivity extends AppCompatActivity implements AdapterClick
 
         if (phrase != null){
 
+            selectedPhrase = phrase;
             constraintViwExtra.setVisibility(View.INVISIBLE);
             txtTranslatedPhrase.setText("");
             btnTranslate.setEnabled(true);
@@ -200,21 +242,35 @@ public class TranslateActivity extends AppCompatActivity implements AdapterClick
     @Override
     public void getTranslateResult(TranslationResult result) {
 
-        constraintViwExtra.setVisibility(View.VISIBLE);
-        btnTranslate.setVisibility(View.VISIBLE);
-        imgRefresh.setVisibility(View.INVISIBLE);
-        imgRefresh.clearAnimation();
-
-
         if (result != null){
 
             if (result.getWordCount() > 0){
+
+                constraintViwExtra.setVisibility(View.VISIBLE);
+                btnTranslate.setVisibility(View.VISIBLE);
+                imgRefresh.setVisibility(View.INVISIBLE);
+                imgRefresh.clearAnimation();
 
                 for(Translation translation: result.getTranslations()){
 
                     txtTranslatedPhrase.setText( txtTranslatedPhrase.getText() + translation.getTranslation() );
                 }
+
+            } else {
+                btnTranslate.setVisibility(View.VISIBLE);
+                imgRefresh.setVisibility(View.INVISIBLE);
+                imgRefresh.clearAnimation();
+
+                Toast.makeText(TranslateActivity.this, "Failed translation",
+                        Toast.LENGTH_LONG).show();
             }
+        }else {
+            btnTranslate.setVisibility(View.VISIBLE);
+            imgRefresh.setVisibility(View.INVISIBLE);
+            imgRefresh.clearAnimation();
+
+            Toast.makeText(TranslateActivity.this, "Failed translation",
+                    Toast.LENGTH_LONG).show();
         }
     }
 

@@ -16,7 +16,7 @@ import androidx.core.content.res.ResourcesCompat;
 
 import com.iit.reword.R;
 
-public class LanguageDropDownAdapter implements SpinnerAdapter, ListAdapter {
+public class LanguageOfflineDropDownAdapter implements SpinnerAdapter, ListAdapter {
 
     protected static final int DEFAULT_PLACEHOLDERS_COUNT = 1;
     protected SpinnerAdapter adapter;
@@ -28,7 +28,7 @@ public class LanguageDropDownAdapter implements SpinnerAdapter, ListAdapter {
 
     private Typeface font ;
 
-    public LanguageDropDownAdapter(SpinnerAdapter spinnerAdapter, int placeholderLayout, Context context) {
+    public LanguageOfflineDropDownAdapter(SpinnerAdapter spinnerAdapter, int placeholderLayout, Context context) {
         this(spinnerAdapter, placeholderLayout, -1, context);
 
         //get font in resources folder
@@ -37,8 +37,8 @@ public class LanguageDropDownAdapter implements SpinnerAdapter, ListAdapter {
     }
 
 
-    public LanguageDropDownAdapter(SpinnerAdapter spinnerAdapter,
-                                                       int placeholderLayout, int placeholderDropdownLayout, Context context) {
+    public LanguageOfflineDropDownAdapter(SpinnerAdapter spinnerAdapter,
+                                   int placeholderLayout, int placeholderDropdownLayout, Context context) {
         this.adapter = spinnerAdapter;
         this.context = context;
         this.placeholderLayout = placeholderLayout;
@@ -55,9 +55,9 @@ public class LanguageDropDownAdapter implements SpinnerAdapter, ListAdapter {
 
         TextView textView = (TextView) adapter.getView(position - DEFAULT_PLACEHOLDERS_COUNT, null, parent);
         textView.setTypeface(font);
-        textView.setTextColor(Color.WHITE);
+        textView.setTextColor(Color.BLACK);
         textView.setTextSize(18);
-        textView.setGravity(Gravity.CENTER);
+        textView.setGravity(Gravity.LEFT);
         return textView;
     }
 

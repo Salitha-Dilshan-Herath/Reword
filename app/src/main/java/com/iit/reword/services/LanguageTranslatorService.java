@@ -50,15 +50,12 @@ class LanguageDownloadTask extends AsyncTask<Void, Integer, IdentifiableLanguage
     protected void onPostExecute(IdentifiableLanguages languages) {
         super.onPostExecute(languages);
 
-
         LanguageTranslatorService.getShareInstance().languageTranslatorServiceImpl.getLanguageList(languages);
     }
 
 }
 
 class LanguageTranslateTask extends AsyncTask<TranslateModel, Integer, TranslationResult> {
-
-
 
     @Override
     protected TranslationResult doInBackground(TranslateModel... translateModels) {
