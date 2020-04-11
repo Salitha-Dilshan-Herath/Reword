@@ -12,7 +12,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.iit.reword.R;
 import com.iit.reword.roomdb.model.Phrase;
-import com.iit.reword.utility.EditPhraseRadioClickListener;
+import com.iit.reword.utility.interfaces.EditPhraseRadioClickListener;
 
 import java.util.List;
 

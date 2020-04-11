@@ -1,4 +1,4 @@
-package com.iit.reword.utility;
+package com.iit.reword.utility.interfaces;
 
 import com.ibm.watson.language_translator.v3.model.IdentifiableLanguages;
 import com.ibm.watson.language_translator.v3.model.TranslationResult;

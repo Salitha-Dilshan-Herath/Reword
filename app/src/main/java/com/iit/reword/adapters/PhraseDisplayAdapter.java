@@ -1,20 +1,18 @@
 package com.iit.reword.adapters;
 
 import android.content.Context;
-import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 import com.iit.reword.R;
 import com.iit.reword.roomdb.model.Phrase;
-import com.iit.reword.utility.AdapterClickListener;
+import com.iit.reword.utility.interfaces.AdapterClickListener;
 
 import java.util.ArrayList;
 import java.util.List;

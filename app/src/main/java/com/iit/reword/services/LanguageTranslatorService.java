@@ -5,8 +5,7 @@ import com.ibm.watson.language_translator.v3.model.IdentifiableLanguages;
 import com.ibm.watson.language_translator.v3.model.TranslateOptions;
 import com.ibm.watson.language_translator.v3.model.TranslationResult;
 import com.iit.reword.model.TranslateModel;
-import com.iit.reword.roomdb.model.Language;
-import com.iit.reword.utility.LanguageTranslatorServiceImpl;
+import com.iit.reword.utility.interfaces.LanguageTranslatorServiceImpl;
 
 public class LanguageTranslatorService  {
 

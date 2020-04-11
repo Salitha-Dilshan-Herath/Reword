@@ -113,7 +113,6 @@ public class LanguageSubscriptionActivity extends AppCompatActivity {
         });
     }
 
-
     private LanguageDisplay findObject( String  code) {
 
         LanguageDisplay languageDisplay = null;

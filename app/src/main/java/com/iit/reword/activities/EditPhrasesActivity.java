@@ -15,9 +15,8 @@ import com.iit.reword.R;
 import com.iit.reword.adapters.PhraseEditAdapter;
 import com.iit.reword.roomdb.DbHandler;
 import com.iit.reword.roomdb.model.Phrase;
-import com.iit.reword.roomdb.model.User;
 import com.iit.reword.utility.Constant;
-import com.iit.reword.utility.EditPhraseRadioClickListener;
+import com.iit.reword.utility.interfaces.EditPhraseRadioClickListener;
 import com.iit.reword.utility.Utility;
 
 import java.util.List;

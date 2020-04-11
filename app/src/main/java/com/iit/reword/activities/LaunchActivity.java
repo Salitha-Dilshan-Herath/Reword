@@ -15,7 +15,7 @@ import com.iit.reword.roomdb.model.Language;
 import com.iit.reword.roomdb.model.User;
 import com.iit.reword.services.LanguageTranslatorService;
 import com.iit.reword.utility.Constant;
-import com.iit.reword.utility.LanguageTranslatorServiceImpl;
+import com.iit.reword.utility.interfaces.LanguageTranslatorServiceImpl;
 
 public class LaunchActivity extends AppCompatActivity implements LanguageTranslatorServiceImpl {
 
