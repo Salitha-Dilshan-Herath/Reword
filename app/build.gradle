@@ -21,6 +21,10 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
+    compileOptions {
+        sourceCompatibility = 1.8
+        targetCompatibility = 1.8
+    }
 
 }
 
@@ -33,6 +37,7 @@ dependencies {
     implementation 'com.google.android.material:material:1.2.0-alpha05'
 
     def room_version = "2.2.5"
+    def archLifecycleVersion = '2.2.0'
 
     implementation "androidx.room:room-runtime:$room_version"
     annotationProcessor "androidx.room:room-compiler:$room_version"
@@ -49,6 +54,14 @@ dependencies {
 
     //card view
     implementation "androidx.cardview:cardview:1.0.0"
+
+    //For Gif
+    implementation 'com.github.bumptech.glide:glide:4.11.0'
+
+    // Lifecycle components
+    implementation "androidx.lifecycle:lifecycle-extensions:$archLifecycleVersion"
+    annotationProcessor "androidx.lifecycle:lifecycle-compiler:$archLifecycleVersion"
+
 
     // Test helpers
     testImplementation "androidx.room:room-testing:$room_version"

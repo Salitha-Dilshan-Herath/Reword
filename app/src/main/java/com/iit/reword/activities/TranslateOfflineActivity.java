@@ -56,7 +56,7 @@ public class TranslateOfflineActivity extends AppCompatActivity {
     private void setSpinnerValues() {
 
         ArrayList stringList = new ArrayList();
-        languageSubscriptions = DbHandler.getAppDatabase(TranslateOfflineActivity.this).languageSubscriptionDao().getAll(Constant.LOGGING_USER.getU_id());
+        //languageSubscriptions = DbHandler.getAppDatabase(TranslateOfflineActivity.this).languageSubscriptionDao().getAll(Constant.LOGGING_USER.getU_id());
 
         for(LanguageSubscription subscription: languageSubscriptions){
             stringList.add(subscription.getName());

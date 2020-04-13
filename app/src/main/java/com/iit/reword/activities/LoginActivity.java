@@ -9,11 +9,14 @@ import android.widget.Button;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.LiveData;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProvider;
 
 import com.google.android.material.textfield.TextInputLayout;
 import com.iit.reword.R;
-import com.iit.reword.roomdb.DbHandler;
 import com.iit.reword.roomdb.model.User;
+import com.iit.reword.roomdb.viewModel.UserViewModel;
 import com.iit.reword.utility.Constant;
 import com.iit.reword.utility.Typewriter;
 
@@ -26,6 +29,8 @@ public class LoginActivity extends AppCompatActivity implements TextWatcher {
     private TextInputLayout usernameTextInputLayout;
     private TextInputLayout passwordTextInputLayout;
 
+    //MARK: Instance Variable
+    private UserViewModel userViewModel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,6 +42,8 @@ public class LoginActivity extends AppCompatActivity implements TextWatcher {
 
 
     private void setupActivity() {
+
+        userViewModel = new ViewModelProvider(this).get(UserViewModel.class);
 
         txtWelcome = findViewById(R.id.txtWelcome);
         btnSignup = findViewById(R.id.btnSignup);
@@ -88,7 +95,7 @@ public class LoginActivity extends AppCompatActivity implements TextWatcher {
             return false;
         }
 
-        return  true;
+        return true;
     }
 
     private void validateCredential() {
@@ -97,38 +104,40 @@ public class LoginActivity extends AppCompatActivity implements TextWatcher {
         String password = passwordTextInputLayout.getEditText().getText().toString();
 
 
-        if (!isValidateUserInputs(username, password))  {
+        if (!isValidateUserInputs(username, password)) {
             return;
         }
 
-        int isExists = DbHandler.getAppDatabase(LoginActivity.this).userDao().isExistsUsers(username);
+        final LiveData<User> isExistsUsersObservable = userViewModel.isExistsUsers(username);
 
-        if (isExists != 0) {
+        isExistsUsersObservable.observe(this, new Observer<User>() {
+            @Override
+            public void onChanged(User user) {
 
-            User user = DbHandler.getAppDatabase(LoginActivity.this).userDao().getUser(username);
+                isExistsUsersObservable.removeObserver(this);
 
-            if (user.getPassword().equals(password)) {
+                if (user != null) {
+                    if (user.getPassword().equals(password)) {
 
-                DbHandler.getAppDatabase(LoginActivity.this).userDao().updateUserStatus(user.getU_id(),true);
+                        userViewModel.updateUserStatus(user.getU_id(), true);
+                        Constant.LOGGING_USER = user;
 
-                Constant.LOGGING_USER = user;
+                        Toast.makeText(LoginActivity.this, "User login successful",
+                                Toast.LENGTH_LONG).show();
 
-                Toast.makeText(LoginActivity.this, "User login successful",
-                        Toast.LENGTH_LONG).show();
+                        Intent intent = new Intent(LoginActivity.this, HomeActivity.class);
+                        startActivity(intent);
 
-                Intent intent = new Intent(LoginActivity.this, HomeActivity.class);
-                startActivity(intent);
+                    } else {
+                        Toast.makeText(LoginActivity.this, "Invalid username or password", Toast.LENGTH_LONG).show();
+                    }
+                }else{
+                    Toast.makeText(LoginActivity.this, "Invalid username or password", Toast.LENGTH_LONG).show();
 
-            } else {
-                Toast.makeText(LoginActivity.this, "Invalid username or password",
-                        Toast.LENGTH_LONG).show();
+                }
+
             }
-
-        } else {
-            Toast.makeText(LoginActivity.this, "Invalid username or password",
-                    Toast.LENGTH_LONG).show();
-        }
-
+        });
     }
 
     @Override

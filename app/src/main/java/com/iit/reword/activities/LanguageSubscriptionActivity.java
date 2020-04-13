@@ -1,6 +1,9 @@
 package com.iit.reword.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.LiveData;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -17,6 +20,8 @@ import com.iit.reword.model.LanguageDisplay;
 import com.iit.reword.roomdb.DbHandler;
 import com.iit.reword.roomdb.model.Language;
 import com.iit.reword.roomdb.model.LanguageSubscription;
+import com.iit.reword.roomdb.viewModel.LanguageSubscriptionViewModel;
+import com.iit.reword.roomdb.viewModel.LanguageViewModel;
 import com.iit.reword.utility.Constant;
 
 import java.util.ArrayList;
@@ -29,6 +34,10 @@ public class LanguageSubscriptionActivity extends AppCompatActivity {
     private LanguageSubscriptionAdapter languageSubscriptionAdapter;
     private List<LanguageDisplay> languageDisplayList = new ArrayList();
 
+    //MARK: Instance Variable
+    private LanguageViewModel languageViewModel;
+    private LanguageSubscriptionViewModel languageSubscriptionViewModel;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -40,33 +49,56 @@ public class LanguageSubscriptionActivity extends AppCompatActivity {
     //MARK: Setup Activity
     private void setupView() {
 
+        languageViewModel             = new ViewModelProvider(this).get(LanguageViewModel.class);
+        languageSubscriptionViewModel = new ViewModelProvider(this).get(LanguageSubscriptionViewModel.class);
+
         recyclerView = findViewById(R.id.recycleViewLanguageSubscription);
 
         btnUpdate = findViewById(R.id.btnUpdate);
 
+        final LiveData<List<Language>> languageListObservable  = languageViewModel.getAllWords();
+        final LiveData<List<LanguageSubscription>> languageSubListObservable  = languageSubscriptionViewModel.getAll(Constant.LOGGING_USER.getU_id());
 
-        List<Language> languages = DbHandler.getAppDatabase(LanguageSubscriptionActivity.this).languageDao().getAll();
-        List<LanguageSubscription> languageSubscriptions = DbHandler.getAppDatabase(LanguageSubscriptionActivity.this).languageSubscriptionDao().getAll(Constant.LOGGING_USER.getU_id());
+        languageListObservable.observe(this, new Observer<List<Language>>() {
+            @Override
+            public void onChanged(List<Language> languageList) {
 
-        for(Language language: languages){
-            LanguageDisplay display = new LanguageDisplay();
+                languageListObservable.removeObserver(this);
 
-            display.setSubscribe(false);
-            display.setName(language.getName());
-            languageDisplayList.add(display);
-        }
+                languageSubListObservable.observe(LanguageSubscriptionActivity.this, new Observer<List<LanguageSubscription>>() {
+                    @Override
+                    public void onChanged(List<LanguageSubscription> languageSubscriptions) {
 
-        for(LanguageSubscription languageSubscription : languageSubscriptions){
+                        languageSubListObservable.removeObserver(this);
 
-           LanguageDisplay findObj = findObject(languageSubscription.getName());
+                        for(Language language: languageList){
+                            LanguageDisplay display = new LanguageDisplay();
 
-           if (findObj != null){
-               findObj.setSubscribe(true);
-           }
-        }
+                            display.setSubscribe(false);
+                            display.setName(language.getName());
+                            languageDisplayList.add(display);
+                        }
 
-        languageSubscriptionAdapter = new LanguageSubscriptionAdapter(languageDisplayList);
-        recyclerView.setAdapter(languageSubscriptionAdapter);
+                        for(LanguageSubscription languageSubscription : languageSubscriptions){
+
+                            LanguageDisplay findObj = findObject(languageSubscription.getName());
+
+                            if (findObj != null){
+                                findObj.setSubscribe(true);
+                            }
+                        }
+
+                        languageSubscriptionAdapter = new LanguageSubscriptionAdapter(languageDisplayList);
+                        recyclerView.setAdapter(languageSubscriptionAdapter);
+
+                    }
+                });
+
+            }
+        });
+
+
+
         recyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
         DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(recyclerView.getContext(), LinearLayoutManager.VERTICAL);
         recyclerView.addItemDecoration(dividerItemDecoration);
@@ -80,25 +112,27 @@ public class LanguageSubscriptionActivity extends AppCompatActivity {
             public void onClick(View view) {
 
                 System.out.println("update click");
-                DbHandler.getAppDatabase(LanguageSubscriptionActivity.this).languageSubscriptionDao().delete(Constant.LOGGING_USER.getU_id());
 
-                boolean isSuccess = false;
+                languageSubscriptionViewModel.delete(Constant.LOGGING_USER.getU_id());
+                boolean isSuccess = true;
+
+                languageSubscriptionViewModel.getAll(Constant.LOGGING_USER.getU_id()).observe(LanguageSubscriptionActivity.this, languageSubscriptions -> {
+                    System.out.println("clear count");
+                    System.out.println(languageSubscriptions.size());
+                });
 
                 for(LanguageDisplay languageDisplay: languageSubscriptionAdapter.getLanguageDisplayList()){
 
+
                     if (languageDisplay.isSubscribe()){
+                        System.out.println(languageDisplay.toString());
 
                         LanguageSubscription language = new LanguageSubscription();
                         language.setName(languageDisplay.getName());
                         language.setU_id(Constant.LOGGING_USER.getU_id());
 
-                        long insertRespones = DbHandler.getAppDatabase(LanguageSubscriptionActivity.this).languageSubscriptionDao().insert(language);
+                        languageSubscriptionViewModel.insert(language);
 
-                        if (insertRespones > 0 ){
-                            isSuccess = true;
-                        }else {
-                            isSuccess = false;
-                        }
                     }
                 }
 

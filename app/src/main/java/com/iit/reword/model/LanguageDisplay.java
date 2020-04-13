@@ -21,4 +21,12 @@ public class LanguageDisplay {
     public void setSubscribe(boolean subscribe) {
         isSubscribe = subscribe;
     }
+
+    @Override
+    public String toString() {
+        return "LanguageDisplay{" +
+                "name='" + name + '\'' +
+                ", isSubscribe=" + isSubscribe +
+                '}';
+    }
 }

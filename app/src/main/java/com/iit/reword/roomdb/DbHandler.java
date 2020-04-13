@@ -17,10 +17,16 @@ import com.iit.reword.roomdb.model.Phrase;
 import com.iit.reword.roomdb.model.Translate;
 import com.iit.reword.roomdb.model.User;
 
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+
 @Database(entities = {User.class, Phrase.class, Language.class, LanguageSubscription.class, Translate.class}, version = 1)
 public abstract class DbHandler extends RoomDatabase {
 
     private static DbHandler INSTANCE;
+    private static final int NUMBER_OF_THREADS = 4;
+    public static final ExecutorService databaseWriteExecutor =
+            Executors.newFixedThreadPool(NUMBER_OF_THREADS);
 
     public abstract UserDao userDao();
     public abstract PhraseDao phraseDao();
@@ -33,6 +39,15 @@ public abstract class DbHandler extends RoomDatabase {
             INSTANCE =
                     Room.databaseBuilder(context.getApplicationContext(), DbHandler.class, "reword-database")
                             .allowMainThreadQueries().build();
+        }
+        return INSTANCE;
+    }
+
+    public static DbHandler getAppDatabaseLive(Context context) {
+        if (INSTANCE == null) {
+            INSTANCE =
+                    Room.databaseBuilder(context.getApplicationContext(), DbHandler.class, "reword-database")
+                            .build();
         }
         return INSTANCE;
     }

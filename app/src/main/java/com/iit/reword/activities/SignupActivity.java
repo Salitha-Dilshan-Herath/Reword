@@ -8,26 +8,32 @@ import android.widget.Button;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.LiveData;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProvider;
 
 import com.google.android.material.textfield.TextInputLayout;
 import com.iit.reword.R;
 import com.iit.reword.roomdb.DbHandler;
 import com.iit.reword.roomdb.model.User;
+import com.iit.reword.roomdb.viewModel.UserViewModel;
 import com.iit.reword.utility.Utility;
 
 import java.util.Date;
 
 public class SignupActivity extends AppCompatActivity implements TextWatcher {
 
+    //MARK: UI Elements
     private TextInputLayout usernameTextInputLayout;
     private TextInputLayout passwordTextInputLayout;
     private TextInputLayout rePasswordTextInputLayout;
-
     private String username;
     private String password;
     private String rePassword;
-
     private Button btnSignup;
+
+   //MARK: Instance Variable
+   private UserViewModel userViewModel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,6 +45,8 @@ public class SignupActivity extends AppCompatActivity implements TextWatcher {
 
 
     private void setupview() {
+
+        userViewModel = new ViewModelProvider(this).get(UserViewModel.class);
 
         usernameTextInputLayout    = findViewById(R.id.txtUsername);
         passwordTextInputLayout    = findViewById(R.id.txtPassword);
@@ -96,34 +104,33 @@ public class SignupActivity extends AppCompatActivity implements TextWatcher {
     }
 
     private void insertNewUser () {
-        int isExists = DbHandler.getAppDatabase(SignupActivity.this).userDao().isExistsUsers(username);
 
-        if (isExists == 0){
+        final LiveData<User> isExistsUsersObservable = userViewModel.isExistsUsers(username);
+        isExistsUsersObservable.observe(this, new Observer<User>() {
+            @Override
+            public void onChanged(User user) {
+                if(user == null){
+                    User newUser = new User();
+                    newUser.setUsername(username);
+                    newUser.setPassword(password);
+                    newUser.setCreatedDate(new Date().toString());
+                    newUser.setLogin(false);
 
-            User user = new User();
-            user.setUsername(username);
-            user.setPassword(password);
-            user.setCreatedDate(new Date().toString());
-            user.setLogin(false);
+                    userViewModel.insert(newUser);
+                    Toast.makeText(SignupActivity.this, "User registered successful",
+                            Toast.LENGTH_LONG).show();
 
-            long createdUser = DbHandler.getAppDatabase(SignupActivity.this).userDao().insert(user);
+                    SignupActivity.this.finish();
 
-            if (createdUser != 0) {
-                Toast.makeText(SignupActivity.this, "User registered successful",
-                        Toast.LENGTH_LONG).show();
 
-                SignupActivity.this.finish();
+                }else {
+                    Toast.makeText(SignupActivity.this, "This user is already registered. Please enter another email",
+                            Toast.LENGTH_LONG).show();
+                }
 
-            }else {
-
-                Toast.makeText(SignupActivity.this, "User registration failed",
-                        Toast.LENGTH_LONG).show();
+                isExistsUsersObservable.removeObserver(this);
             }
-
-        }else {
-            Toast.makeText(SignupActivity.this, "This user is already registered. Please enter another email",
-                    Toast.LENGTH_LONG).show();
-        }
+        });
     }
 
 

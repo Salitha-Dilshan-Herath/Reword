@@ -1,6 +1,9 @@
 package com.iit.reword.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.LiveData;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProvider;
 
 import android.os.Bundle;
 import android.text.Editable;
@@ -13,12 +16,17 @@ import com.google.android.material.textfield.TextInputLayout;
 import com.iit.reword.R;
 import com.iit.reword.roomdb.DbHandler;
 import com.iit.reword.roomdb.model.Phrase;
+import com.iit.reword.roomdb.viewModel.PhraseViewModel;
 import com.iit.reword.utility.Constant;
 
 public class AddPhrasesActivity extends AppCompatActivity implements TextWatcher {
 
+    //MARK: UI Elements
     private Button btnAddPhrase;
     private TextInputLayout phraseTextInputLayout;
+
+    //MARK: Instance Variable
+    private PhraseViewModel phraseViewModel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,6 +38,7 @@ public class AddPhrasesActivity extends AppCompatActivity implements TextWatcher
 
     private void setupview(){
 
+        phraseViewModel = new ViewModelProvider(this).get(PhraseViewModel.class);
         btnAddPhrase = findViewById(R.id.btnAddPhrase);
 
         phraseTextInputLayout = findViewById(R.id.addPhrasesTextInputLayout);
@@ -41,49 +50,52 @@ public class AddPhrasesActivity extends AppCompatActivity implements TextWatcher
     private void setupListeners() {
 
 
-        btnAddPhrase.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
+        btnAddPhrase.setOnClickListener(view -> {
 
-                String phrase = phraseTextInputLayout.getEditText().getText().toString().trim().toLowerCase();
+            String phrase = phraseTextInputLayout.getEditText().getText().toString().trim().toLowerCase();
 
-                if (phrase.equals("")) {
-                    phraseTextInputLayout.setError("Please enter phrase");
-                    return ;
-                }
-
-               addPhraseToDB(phrase);
-
+            if (phrase.equals("")) {
+                phraseTextInputLayout.setError("Please enter phrase");
+                return ;
             }
+
+           addPhraseToDB(phrase);
+
         });
     }
 
-    private void addPhraseToDB(String phrase) {
-        Phrase phraseObj = new Phrase();
-        phraseObj.setPhrase(phrase);
-        phraseObj.setUser(Constant.LOGGING_USER.getU_id());
+    private void addPhraseToDB(String txtphrase) {
 
-        int isExists = DbHandler.getAppDatabase(AddPhrasesActivity.this).phraseDao().isExists(phrase, Constant.LOGGING_USER.getU_id());
 
-        if (isExists != 0 ) {
-            Toast.makeText(AddPhrasesActivity.this, phrase +" already exists, Try another phrase",
-                    Toast.LENGTH_LONG).show();
+        final LiveData<Phrase> isExistsPhrasesObservable = phraseViewModel.isExists(txtphrase, Constant.LOGGING_USER.getU_id());
 
-            return;
-        }
+        isExistsPhrasesObservable.observe(this, new Observer<Phrase>() {
 
-        long response =  DbHandler.getAppDatabase(AddPhrasesActivity.this).phraseDao().insert(phraseObj);
+            @Override
+            public void onChanged(Phrase phrase) {
 
-        if (response != 0 ) {
+                isExistsPhrasesObservable.removeObserver(this);
 
-            phraseTextInputLayout.getEditText().setText(null);
+                System.out.println(phrase);
+                if (phrase !=null){
+                    Toast.makeText(AddPhrasesActivity.this, txtphrase +" already exists, Try another phrase",
+                            Toast.LENGTH_LONG).show();
+                    return;
+                }
 
-            Toast.makeText(AddPhrasesActivity.this, "Phrase added success",
-                    Toast.LENGTH_LONG).show();
-        }else {
-            Toast.makeText(AddPhrasesActivity.this, "Phrase add fail",
-                    Toast.LENGTH_LONG).show();
-        }
+                Phrase phraseObj = new Phrase();
+                phraseObj.setPhrase(txtphrase);
+                phraseObj.setUser(Constant.LOGGING_USER.getU_id());
+                phraseViewModel.insert(phraseObj);
+
+                phraseTextInputLayout.getEditText().setText(null);
+                Toast.makeText(AddPhrasesActivity.this, "Phrase added success",
+                        Toast.LENGTH_LONG).show();
+
+
+            }
+        });
+
     }
 
     @Override

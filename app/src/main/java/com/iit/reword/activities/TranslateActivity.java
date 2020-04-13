@@ -88,11 +88,11 @@ public class TranslateActivity extends AppCompatActivity implements AdapterClick
         imagePronounceRefresh.setVisibility(View.INVISIBLE);
         btnTranslate.setEnabled(false);
 
-        List<Phrase> phrases = DbHandler.getAppDatabase(TranslateActivity.this).phraseDao().getAll(Constant.LOGGING_USER.getU_id());
-        PhraseDisplayAdapter phraseDisplayAdapter = new PhraseDisplayAdapter(phrases, this);
+        //List<Phrase> phrases = DbHandler.getAppDatabase(TranslateActivity.this).phraseDao().getAll(Constant.LOGGING_USER.getU_id());
+        //PhraseDisplayAdapter phraseDisplayAdapter = new PhraseDisplayAdapter(phrases, this);
         DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(recyclerView.getContext(), LinearLayoutManager.VERTICAL);
 
-        recyclerView.setAdapter(phraseDisplayAdapter);
+        //recyclerView.setAdapter(phraseDisplayAdapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
         recyclerView.addItemDecoration(dividerItemDecoration);
 
@@ -200,7 +200,7 @@ public class TranslateActivity extends AppCompatActivity implements AdapterClick
     private void setSpinnerValues() {
 
         ArrayList stringList = new ArrayList();
-        languageSubscriptions = DbHandler.getAppDatabase(TranslateActivity.this).languageSubscriptionDao().getAll(Constant.LOGGING_USER.getU_id());
+        //languageSubscriptions = DbHandler.getAppDatabase(TranslateActivity.this).languageSubscriptionDao().getAll(Constant.LOGGING_USER.getU_id());
 
         for(LanguageSubscription subscription: languageSubscriptions){
             stringList.add(subscription.getName());
