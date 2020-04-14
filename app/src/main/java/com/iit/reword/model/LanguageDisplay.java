@@ -6,6 +6,8 @@ public class LanguageDisplay {
 
     private boolean isSubscribe;
 
+    private String lanCode;
+
     public String getName() {
         return name;
     }
@@ -20,6 +22,14 @@ public class LanguageDisplay {
 
     public void setSubscribe(boolean subscribe) {
         isSubscribe = subscribe;
+    }
+
+    public String getLanCode() {
+        return lanCode;
+    }
+
+    public void setLanCode(String lanCode) {
+        this.lanCode = lanCode;
     }
 
     @Override

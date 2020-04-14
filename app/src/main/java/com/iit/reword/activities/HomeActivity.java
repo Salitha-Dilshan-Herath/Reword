@@ -87,9 +87,7 @@ public class HomeActivity extends AppCompatActivity {
         btnTranslator.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-//                Intent intent = new Intent(HomeActivity.this, TranslateActivity.class);
-//                startActivity(intent);
-                Intent intent = new Intent(HomeActivity.this, TranslateOfflineActivity.class);
+                Intent intent = new Intent(HomeActivity.this, TranslateActivity.class);
                 startActivity(intent);
 
             }

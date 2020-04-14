@@ -4,7 +4,12 @@ import android.os.AsyncTask;
 
 import com.ibm.cloud.sdk.core.http.HttpMediaType;
 import com.ibm.watson.developer_cloud.android.library.audio.StreamPlayer;
+import com.ibm.watson.text_to_speech.v1.model.CreateVoiceModelOptions;
+import com.ibm.watson.text_to_speech.v1.model.ListVoiceModelsOptions;
 import com.ibm.watson.text_to_speech.v1.model.SynthesizeOptions;
+import com.ibm.watson.text_to_speech.v1.model.UpdateVoiceModelOptions;
+import com.ibm.watson.text_to_speech.v1.model.VoiceModel;
+import com.ibm.watson.text_to_speech.v1.model.VoiceModels;
 import com.iit.reword.utility.interfaces.TextSpeechServiceImpl;
 
 public class TextToSpeechService {

@@ -81,4 +81,15 @@ public class Translate {
     public void setLanguageId(String languageId) {
         this.languageId = languageId;
     }
+
+    @Override
+    public String toString() {
+        return "Translate{" +
+                "tid=" + tid +
+                ", p_id=" + p_id +
+                ", translatePhrase='" + translatePhrase + '\'' +
+                ", user=" + user +
+                ", languageId='" + languageId + '\'' +
+                '}';
+    }
 }

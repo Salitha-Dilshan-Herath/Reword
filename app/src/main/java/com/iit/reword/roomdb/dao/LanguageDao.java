@@ -17,12 +17,6 @@ public interface LanguageDao {
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     void insert(Language language);
 
-    @Query("SELECT * FROM language")
-    List<Language> getAll();
-
-    @Query("SELECT * FROM language where name = :name")
-    Language get(String name);
-
     //new
     @Query("SELECT * FROM language")
     LiveData<List<Language>>  getAllLive();

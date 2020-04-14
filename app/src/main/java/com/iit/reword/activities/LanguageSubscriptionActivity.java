@@ -74,6 +74,7 @@ public class LanguageSubscriptionActivity extends AppCompatActivity {
                         for(Language language: languageList){
                             LanguageDisplay display = new LanguageDisplay();
 
+                            display.setLanCode(language.getCode());
                             display.setSubscribe(false);
                             display.setName(language.getName());
                             languageDisplayList.add(display);
@@ -130,7 +131,7 @@ public class LanguageSubscriptionActivity extends AppCompatActivity {
                         LanguageSubscription language = new LanguageSubscription();
                         language.setName(languageDisplay.getName());
                         language.setU_id(Constant.LOGGING_USER.getU_id());
-
+                        language.setLan_code(languageDisplay.getLanCode());
                         languageSubscriptionViewModel.insert(language);
 
                     }

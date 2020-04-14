@@ -178,36 +178,11 @@
                             app:layout_constraintTop_toTopOf="parent">
 
                             <androidx.constraintlayout.widget.ConstraintLayout
-                                android:id="@+id/constraintLayout26"
-                                android:layout_width="0dp"
-                                android:layout_height="0dp"
-                                app:layout_constraintBottom_toBottomOf="parent"
-                                app:layout_constraintStart_toStartOf="parent"
-                                app:layout_constraintTop_toTopOf="parent"
-                                app:layout_constraintWidth_percent=".5">
-
-                                <Button
-                                    android:id="@+id/btnSaveDb"
-                                    android:layout_width="0dp"
-                                    android:layout_height="0dp"
-                                    android:layout_marginStart="5dp"
-                                    android:layout_marginTop="5dp"
-                                    android:layout_marginEnd="5dp"
-                                    android:layout_marginBottom="5dp"
-                                    android:text="Save"
-                                    app:backgroundTint="#00BCD4"
-                                    app:layout_constraintBottom_toBottomOf="parent"
-                                    app:layout_constraintEnd_toEndOf="parent"
-                                    app:layout_constraintStart_toStartOf="parent"
-                                    app:layout_constraintTop_toTopOf="parent" />
-                            </androidx.constraintlayout.widget.ConstraintLayout>
-
-                            <androidx.constraintlayout.widget.ConstraintLayout
                                 android:layout_width="0dp"
                                 android:layout_height="0dp"
                                 app:layout_constraintBottom_toBottomOf="parent"
                                 app:layout_constraintEnd_toEndOf="parent"
-                                app:layout_constraintStart_toEndOf="@+id/constraintLayout26"
+                                app:layout_constraintStart_toStartOf="parent"
                                 app:layout_constraintTop_toTopOf="parent">
 
                                 <Button
@@ -229,13 +204,13 @@
                                     android:id="@+id/imagePronounceRefresh"
                                     android:layout_width="0dp"
                                     android:layout_height="0dp"
+                                    android:elevation="2dp"
+                                    android:padding="15dp"
                                     app:layout_constraintBottom_toBottomOf="parent"
                                     app:layout_constraintEnd_toEndOf="parent"
                                     app:layout_constraintStart_toStartOf="@+id/btnSpeech"
                                     app:layout_constraintTop_toTopOf="parent"
-                                    app:srcCompat="@drawable/refresh"
-                                    android:elevation="2dp"
-                                    android:padding="15dp"/>
+                                    app:srcCompat="@drawable/refresh" />
 
                             </androidx.constraintlayout.widget.ConstraintLayout>
                         </androidx.constraintlayout.widget.ConstraintLayout>
@@ -361,6 +336,18 @@
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toTopOf="parent" />
+
+                        <Button
+                            android:id="@+id/btnViewAll"
+                            android:layout_width="0dp"
+                            android:layout_height="0dp"
+                            android:layout_marginEnd="16dp"
+                            android:text="Translate All"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toEndOf="@+id/textView5"
+                            app:layout_constraintTop_toTopOf="parent"
+                            app:layout_constraintWidth_percent=".4"/>
+
                     </androidx.constraintlayout.widget.ConstraintLayout>
 
                     <androidx.recyclerview.widget.RecyclerView

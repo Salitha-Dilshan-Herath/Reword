@@ -33,31 +33,6 @@
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/constraintLayout28"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHeight_percent=".1"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/constraintLayout9">
-
-
-        <Spinner
-            android:id="@+id/spinnerLanguagesOffline"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:layout_marginTop="8dp"
-
-            android:layout_marginBottom="8dp"
-            android:background="@drawable/spinner_boarder"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintWidth_percent=".9" />
-    </androidx.constraintlayout.widget.ConstraintLayout>
-
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recycleViewOffline"
         android:layout_width="0dp"
@@ -74,12 +49,13 @@
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_marginStart="8dp"
+        android:layout_marginTop="16dp"
         android:layout_marginEnd="8dp"
         android:background="#E81123"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHeight_percent=".07"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/constraintLayout28">
+        app:layout_constraintTop_toBottomOf="@+id/constraintLayout9">
 
         <TextView
             android:id="@+id/textView6"
@@ -90,20 +66,22 @@
             android:gravity="center"
             android:text="English"
             android:textColor="#FFFFFF"
+            android:textSize="18sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintWidth_percent=".499" />
 
         <TextView
-            android:id="@+id/textView7"
+            android:id="@+id/txtHeaderSelectedLanguage"
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:background="@color/colorAccent"
             android:fontFamily="@font/baumans"
             android:gravity="center"
-            android:text="Japan"
+            android:text="None"
             android:textColor="#FFFFFF"
+            android:textSize="18sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"

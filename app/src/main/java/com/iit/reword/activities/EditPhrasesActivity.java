@@ -62,7 +62,6 @@ public class EditPhrasesActivity extends AppCompatActivity implements EditPhrase
         editTextInputLayout.getEditText().setEnabled(false);
         btnSave.setEnabled(false);
 
-        //phrases = DbHandler.getAppDatabase(EditPhrasesActivity.this).phraseDao().getAll(Constant.LOGGING_USER.getU_id());
         phraseViewModel.getAll(Constant.LOGGING_USER.getU_id()).observe(this, phrases -> {
             this.phrases = phrases;
             phraseEditAdapter = new PhraseEditAdapter(phrases, this);

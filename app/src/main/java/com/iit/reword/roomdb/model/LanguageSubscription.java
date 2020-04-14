@@ -16,6 +16,9 @@ public class LanguageSubscription {
     @NonNull
     public int u_id;
 
+    @ColumnInfo(name = "lan_code")
+    public String lan_code;
+
     @NonNull
     public String getName() {
         return name;
@@ -32,5 +35,13 @@ public class LanguageSubscription {
 
     public void setU_id(@NonNull int u_id) {
         this.u_id = u_id;
+    }
+
+    public String getLan_code() {
+        return lan_code;
+    }
+
+    public void setLan_code(String lan_code) {
+        this.lan_code = lan_code;
     }
 }

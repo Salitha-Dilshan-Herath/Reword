@@ -1,6 +1,9 @@
 package com.iit.reword.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.LiveData;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -10,7 +13,10 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Spinner;
+import android.widget.TextView;
 
+import com.ibm.watson.language_translator.v3.model.IdentifiableLanguages;
+import com.ibm.watson.language_translator.v3.model.TranslationResult;
 import com.iit.reword.R;
 import com.iit.reword.adapters.LanguageDropDownAdapter;
 import com.iit.reword.adapters.LanguageOfflineDropDownAdapter;
@@ -19,21 +25,27 @@ import com.iit.reword.model.OfflineTranslate;
 import com.iit.reword.roomdb.DbHandler;
 import com.iit.reword.roomdb.model.Language;
 import com.iit.reword.roomdb.model.LanguageSubscription;
+import com.iit.reword.roomdb.model.Phrase;
+import com.iit.reword.roomdb.viewModel.LanguageSubscriptionViewModel;
+import com.iit.reword.roomdb.viewModel.LanguageViewModel;
+import com.iit.reword.roomdb.viewModel.PhraseViewModel;
+import com.iit.reword.services.LanguageTranslatorService;
 import com.iit.reword.utility.Constant;
+import com.iit.reword.utility.interfaces.LanguageTranslatorServiceImpl;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class TranslateOfflineActivity extends AppCompatActivity {
+public class TranslateOfflineActivity extends AppCompatActivity implements LanguageTranslatorServiceImpl {
 
     private Spinner spinnerLanguages;
     private RecyclerView recyclerView;
+    private TextView txtHeaderSelectedLanguage;
 
     //MARK: Instance Variables
-    private ArrayAdapter adapter;
-    private List<LanguageSubscription> languageSubscriptions;
-    private OfflinePhraseAdapter offlinePhraseAdapter;
-
+    private PhraseViewModel phraseViewModel;
+    private String languageCode;
+    private String languageName;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,63 +58,32 @@ public class TranslateOfflineActivity extends AppCompatActivity {
     //MARK: Custom methods
     private void setupView(){
 
-        spinnerLanguages = findViewById(R.id.spinnerLanguagesOffline);
-        recyclerView     =  findViewById(R.id.recycleViewOffline);
-        setSpinnerValues();
-        setupListeners();
-    }
+        phraseViewModel             = new ViewModelProvider(this).get(PhraseViewModel.class);
 
-    //MARK: Load Data to spinner
-    private void setSpinnerValues() {
+        recyclerView                =  findViewById(R.id.recycleViewOffline);
+        txtHeaderSelectedLanguage   = findViewById(R.id.txtHeaderSelectedLanguage);
 
-        ArrayList stringList = new ArrayList();
-        //languageSubscriptions = DbHandler.getAppDatabase(TranslateOfflineActivity.this).languageSubscriptionDao().getAll(Constant.LOGGING_USER.getU_id());
+        Bundle bundle = getIntent().getExtras();
+        languageCode  = bundle.getString("lan_code");
+        languageName  = bundle.getString("lan_name");
 
-        for(LanguageSubscription subscription: languageSubscriptions){
-            stringList.add(subscription.getName());
-        }
+        txtHeaderSelectedLanguage.setText(languageName);
 
-        //set data to spinner
-        adapter = new ArrayAdapter(this, android.R.layout.simple_spinner_item, stringList);
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        LanguageTranslatorService.getShareInstance().languageTranslatorServiceImpl = this;
 
-        spinnerLanguages.setAdapter(
-                new LanguageOfflineDropDownAdapter(
-                        adapter,
-                        R.layout.offline_spinner_defualt_value,
-                        this));
+        final LiveData<List<Phrase>> phrasesListObservable  = phraseViewModel.getAll(Constant.LOGGING_USER.getU_id());
 
 
 
     }
 
-    private void setupListeners (){
-        spinnerLanguages.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+    @Override
+    public void getLanguageList(IdentifiableLanguages languages) {
 
-                if (spinnerLanguages.getSelectedItemPosition() <= 0 )
-                    return;
+    }
 
-                LanguageSubscription selectedLanguage = languageSubscriptions.get(spinnerLanguages.getSelectedItemPosition() - 1);
-                Language language = DbHandler.getAppDatabase(TranslateOfflineActivity.this).languageDao().get(selectedLanguage.getName());
-
-                System.out.println(language.getCode());
-
-                List<OfflineTranslate> offlineTranslatesList = DbHandler.getAppDatabase(TranslateOfflineActivity.this).translateDao().getTranslateWord(language.getName(),Constant.LOGGING_USER.getU_id());
-
-                offlinePhraseAdapter = new OfflinePhraseAdapter(offlineTranslatesList);
-                recyclerView.setAdapter(offlinePhraseAdapter);
-                recyclerView.setLayoutManager(new LinearLayoutManager(TranslateOfflineActivity.this, LinearLayoutManager.VERTICAL, false));
-                DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(recyclerView.getContext(), LinearLayoutManager.VERTICAL);
-                recyclerView.addItemDecoration(dividerItemDecoration);
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> adapterView) {
-
-            }
-        });
+    @Override
+    public void getTranslateResult(TranslationResult result) {
 
     }
 }
