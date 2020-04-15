@@ -10,12 +10,11 @@ import android.view.View;
 import android.widget.Button;
 
 import com.iit.reword.R;
-import com.iit.reword.roomdb.DbHandler;
-import com.iit.reword.utility.Constant;
+import com.iit.reword.utility.Typewriter;
 
 public class HomeActivity extends AppCompatActivity {
 
-    private Button btnLogout;
+    private Typewriter txtHeader;
     private Button btnAddPhrases;
     private Button btnDisplayPhrase;
     private Button btnEditPhrase;
@@ -32,25 +31,20 @@ public class HomeActivity extends AppCompatActivity {
 
 
     private void setupview() {
-
-        btnLogout        = findViewById(R.id.btnLogout);
         btnAddPhrases    = findViewById(R.id.btnAddPhrases);
         btnDisplayPhrase = findViewById(R.id.btnDisplayPhrase);
         btnEditPhrase    = findViewById(R.id.btnEditPhrases);
         btnSubscription  = findViewById(R.id.btnSubscription);
         btnTranslator    = findViewById(R.id.btnTranslator);
+        txtHeader        = findViewById(R.id.txtHeader);
+
+        txtHeader.setCharacterDelay(150);
+        txtHeader.animateText("Reword");
         setupListeners();
 
     }
 
     private void setupListeners(){
-
-        btnLogout.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                logoutAlert();
-            }
-        });
 
         btnAddPhrases.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -92,38 +86,5 @@ public class HomeActivity extends AppCompatActivity {
 
             }
         });
-
-
-
-    }
-
-    private void logoutAlert(){
-        AlertDialog.Builder alertBuilder = new AlertDialog.Builder(this);
-        alertBuilder.setMessage("Do you want logout?");
-        alertBuilder.setCancelable(true);
-
-        alertBuilder.setPositiveButton(
-                "Yes",
-                new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int id) {
-
-                        DbHandler.getAppDatabase(HomeActivity.this).userDao().updateUserStatus(Constant.LOGGING_USER.getU_id(),false);
-
-                        Intent intent = new Intent(HomeActivity.this, LoginActivity.class);
-                        startActivity(intent);
-                        HomeActivity.this.finish();
-                    }
-                });
-
-        alertBuilder.setNegativeButton(
-                "No",
-                new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int id) {
-                        dialog.cancel();
-                    }
-                });
-
-        AlertDialog alert11 = alertBuilder.create();
-        alert11.show();
     }
 }

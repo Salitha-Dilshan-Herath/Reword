@@ -22,15 +22,15 @@ public class LanguageSubscriptionViewModel extends AndroidViewModel {
         languageSubscriptionRepository = new LanguageSubscriptionRepository(application);
     }
 
-    public LiveData<List<LanguageSubscription>> getAll(int u_id) {
-        return  languageSubscriptionRepository.getAll(u_id);
+    public LiveData<List<LanguageSubscription>> getAll() {
+        return  languageSubscriptionRepository.getAll();
     }
 
     public void insert(LanguageSubscription languageSubscription) { languageSubscriptionRepository.insert(languageSubscription); }
 
-    public void delete(int u_id) {
+    public void delete() {
         DbHandler.databaseWriteExecutor.execute(() -> {
-            languageSubscriptionRepository.delete(u_id);
+            languageSubscriptionRepository.delete();
         });
     }
 }

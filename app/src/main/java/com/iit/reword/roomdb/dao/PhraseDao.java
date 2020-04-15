@@ -12,11 +12,11 @@ import java.util.List;
 @Dao
 public interface PhraseDao {
 
-    @Query("SELECT * FROM phrase where phrase = :phrase AND user = :u_id")
-    LiveData<Phrase> isExists(String phrase, int u_id);
+    @Query("SELECT * FROM phrase where phrase = :phrase")
+    LiveData<Phrase> isExists(String phrase);
 
-    @Query("SELECT * FROM phrase where user = :user ORDER BY phrase ASC")
-    LiveData<List<Phrase>> getAll(int user);
+    @Query("SELECT * FROM phrase ORDER BY phrase ASC")
+    LiveData<List<Phrase>> getAll();
 
     @Insert
     void insert(Phrase phrase);

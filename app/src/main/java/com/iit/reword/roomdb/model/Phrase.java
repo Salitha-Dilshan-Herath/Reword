@@ -8,15 +8,7 @@ import androidx.room.ForeignKey;
 import androidx.room.Ignore;
 import androidx.room.PrimaryKey;
 
-@Entity(tableName = "phrase", foreignKeys = {
-                                                @ForeignKey(
-                                                        entity = User.class,
-                                                        parentColumns = "u_id",
-                                                        childColumns = "user",
-                                                        onDelete = ForeignKey.CASCADE,
-                                                        onUpdate = ForeignKey.CASCADE
-                                                )
-        })
+@Entity(tableName = "phrase")
 public class Phrase {
 
 
@@ -28,8 +20,6 @@ public class Phrase {
     @ColumnInfo(name = "phrase")
     public String phrase;
 
-    @ColumnInfo(name = "user")
-    public int user;
 
     @Ignore
     public Boolean isSelected;
@@ -40,14 +30,6 @@ public class Phrase {
 
     public void setPhrase(String phrase) {
         this.phrase = phrase;
-    }
-
-    public int getUser() {
-        return user;
-    }
-
-    public void setUser(int user) {
-        this.user = user;
     }
 
     public Boolean getSelected() {
@@ -67,7 +49,6 @@ public class Phrase {
         return "Phrase{" +
                 "pid=" + pid +
                 ", phrase='" + phrase + '\'' +
-                ", user='" + user + '\'' +
                 ", isSelected=" + isSelected +
                 '}';
     }

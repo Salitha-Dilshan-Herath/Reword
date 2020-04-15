@@ -62,7 +62,7 @@ public class EditPhrasesActivity extends AppCompatActivity implements EditPhrase
         editTextInputLayout.getEditText().setEnabled(false);
         btnSave.setEnabled(false);
 
-        phraseViewModel.getAll(Constant.LOGGING_USER.getU_id()).observe(this, phrases -> {
+        phraseViewModel.getAll().observe(this, phrases -> {
             this.phrases = phrases;
             phraseEditAdapter = new PhraseEditAdapter(phrases, this);
             recyclerView.setAdapter(phraseEditAdapter);
@@ -112,7 +112,7 @@ public class EditPhrasesActivity extends AppCompatActivity implements EditPhrase
     private void updatePhrase(String updatePhrase) {
 
 
-        final LiveData<Phrase> isExistsPhrasesObservable = phraseViewModel.isExists(updatePhrase, Constant.LOGGING_USER.getU_id());
+        final LiveData<Phrase> isExistsPhrasesObservable = phraseViewModel.isExists(updatePhrase);
 
         isExistsPhrasesObservable.observe(this, new Observer<Phrase>() {
             @Override

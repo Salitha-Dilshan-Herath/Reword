@@ -18,12 +18,12 @@ public class PhraseRepository {
         phraseDao = DbHandler.getAppDatabaseLive(application).phraseDao();
     }
 
-    public LiveData<List<Phrase>> getAll(int user) {
-        return phraseDao.getAll(user);
+    public LiveData<List<Phrase>> getAll() {
+        return phraseDao.getAll();
     }
 
-    public LiveData<Phrase> isExists(String phrase, int u_id) {
-        return phraseDao.isExists(phrase,u_id);
+    public LiveData<Phrase> isExists(String phrase) {
+        return phraseDao.isExists(phrase);
     }
 
     public void insert(Phrase phrase){

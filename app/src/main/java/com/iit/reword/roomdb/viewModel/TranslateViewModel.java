@@ -30,16 +30,20 @@ public class TranslateViewModel extends AndroidViewModel {
         });
     }
 
-    public LiveData<Translate> isExistsPhrase(int pId, String lanId, int userId) {
-        return translateRepository.isExistsPhrase(pId, lanId, userId);
+    public LiveData<Translate> isExistsPhrase(int pId, String lanId) {
+        return translateRepository.isExistsPhrase(pId, lanId);
     }
 
     public LiveData<List<Translate>> isExistsPhrase() {
         return translateRepository.isExistsPhrase();
     }
 
-    public LiveData<List<OfflineTranslate>>getTranslateWords(String lanId, int userId){
+    public LiveData<List<OfflineTranslate>>getTranslateWords(String lanId){
 
-        return translateRepository.getTranslateWords(lanId,userId);
+        return translateRepository.getTranslateWords(lanId);
+    }
+
+    public LiveData<Translate> getExistsPhrase(int pId, String lanId) {
+        return translateRepository.getExistsPhrase(pId, lanId);
     }
 }

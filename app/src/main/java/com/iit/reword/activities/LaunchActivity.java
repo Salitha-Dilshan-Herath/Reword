@@ -1,12 +1,12 @@
 package com.iit.reword.activities;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.widget.ImageView;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.bumptech.glide.Glide;
@@ -14,14 +14,13 @@ import com.ibm.watson.language_translator.v3.model.IdentifiableLanguage;
 import com.ibm.watson.language_translator.v3.model.IdentifiableLanguages;
 import com.ibm.watson.language_translator.v3.model.TranslationResult;
 import com.iit.reword.R;
-import com.iit.reword.roomdb.DbHandler;
+import com.iit.reword.model.TranslateModel;
 import com.iit.reword.roomdb.model.Language;
-import com.iit.reword.roomdb.model.User;
 import com.iit.reword.roomdb.viewModel.LanguageViewModel;
-import com.iit.reword.roomdb.viewModel.UserViewModel;
 import com.iit.reword.services.LanguageTranslatorService;
 import com.iit.reword.utility.Constant;
 import com.iit.reword.utility.interfaces.LanguageTranslatorServiceImpl;
+
 
 public class LaunchActivity extends AppCompatActivity implements LanguageTranslatorServiceImpl {
 
@@ -30,8 +29,6 @@ public class LaunchActivity extends AppCompatActivity implements LanguageTransla
 
     //MARK: Instance Variable
     private LanguageViewModel languageViewModel;
-    private UserViewModel     userViewModel;
-
 
     //MARK: Life cycle events
     @Override
@@ -46,7 +43,7 @@ public class LaunchActivity extends AppCompatActivity implements LanguageTransla
     private void setupView() {
 
         languageViewModel = new ViewModelProvider(this).get(LanguageViewModel.class);
-        userViewModel     = new ViewModelProvider(this).get(UserViewModel.class);
+
         //Load initial GIF
         imageView = findViewById(R.id.imgGif);
         Glide.with(this).load(R.drawable.read).into(imageView);
@@ -60,25 +57,9 @@ public class LaunchActivity extends AppCompatActivity implements LanguageTransla
         new Handler().postDelayed(new Runnable() {
             public void run() {
 
-                //get isLogged user or not
-                userViewModel.getLoginUser().observe(LaunchActivity.this, user -> {
-
-                    if (user != null) {
-
-                        Constant.LOGGING_USER = user;
-
-                        Intent intent = new Intent(getApplicationContext(), HomeActivity.class);
-                        startActivity(intent);
-                        finish();
-
-                    } else {
-                        Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
-                        startActivity(intent);
-                        finish();
-                    }
-
-                });
-
+                Intent intent = new Intent(getApplicationContext(), HomeActivity.class);
+                startActivity(intent);
+                finish();
 
 
             }
@@ -116,6 +97,11 @@ public class LaunchActivity extends AppCompatActivity implements LanguageTransla
 
     @Override
     public void getTranslateResult(TranslationResult result) {
+
+    }
+
+    @Override
+    public void getTranslateListResult(TranslateModel model) {
 
     }
 }

@@ -39,7 +39,7 @@ public class DisplayPhrasesActivity extends AppCompatActivity {
 
         recyclerView = findViewById(R.id.recycleViewPhrase);
 
-        phraseViewModel.getAll(Constant.LOGGING_USER.getU_id()).observe(this, phrases -> {
+        phraseViewModel.getAll().observe(this, phrases -> {
             PhraseDisplayAdapter phraseDisplayAdapter = new PhraseDisplayAdapter(phrases, null);
             recyclerView.setAdapter(phraseDisplayAdapter);
         });

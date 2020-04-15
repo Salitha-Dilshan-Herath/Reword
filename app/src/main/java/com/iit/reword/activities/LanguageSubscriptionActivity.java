@@ -57,7 +57,7 @@ public class LanguageSubscriptionActivity extends AppCompatActivity {
         btnUpdate = findViewById(R.id.btnUpdate);
 
         final LiveData<List<Language>> languageListObservable  = languageViewModel.getAllWords();
-        final LiveData<List<LanguageSubscription>> languageSubListObservable  = languageSubscriptionViewModel.getAll(Constant.LOGGING_USER.getU_id());
+        final LiveData<List<LanguageSubscription>> languageSubListObservable  = languageSubscriptionViewModel.getAll();
 
         languageListObservable.observe(this, new Observer<List<Language>>() {
             @Override
@@ -114,10 +114,10 @@ public class LanguageSubscriptionActivity extends AppCompatActivity {
 
                 System.out.println("update click");
 
-                languageSubscriptionViewModel.delete(Constant.LOGGING_USER.getU_id());
+                languageSubscriptionViewModel.delete();
                 boolean isSuccess = true;
 
-                languageSubscriptionViewModel.getAll(Constant.LOGGING_USER.getU_id()).observe(LanguageSubscriptionActivity.this, languageSubscriptions -> {
+                languageSubscriptionViewModel.getAll().observe(LanguageSubscriptionActivity.this, languageSubscriptions -> {
                     System.out.println("clear count");
                     System.out.println(languageSubscriptions.size());
                 });
@@ -130,7 +130,6 @@ public class LanguageSubscriptionActivity extends AppCompatActivity {
 
                         LanguageSubscription language = new LanguageSubscription();
                         language.setName(languageDisplay.getName());
-                        language.setU_id(Constant.LOGGING_USER.getU_id());
                         language.setLan_code(languageDisplay.getLanCode());
                         languageSubscriptionViewModel.insert(language);
 

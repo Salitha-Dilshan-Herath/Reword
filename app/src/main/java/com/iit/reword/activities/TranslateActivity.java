@@ -44,6 +44,7 @@ import com.iit.reword.utility.interfaces.TextSpeechServiceImpl;
 import java.util.ArrayList;
 import java.util.List;
 
+
 public class TranslateActivity extends AppCompatActivity implements AdapterClickListener, LanguageTranslatorServiceImpl, TextSpeechServiceImpl {
 
     //MARK: UI Elements
@@ -102,7 +103,7 @@ public class TranslateActivity extends AppCompatActivity implements AdapterClick
         LanguageTranslatorService.getShareInstance().languageTranslatorServiceImpl = TranslateActivity.this;
 
 
-        final LiveData<List<Phrase>> phrasesListObservable  = phraseViewModel.getAll(Constant.LOGGING_USER.getU_id());
+        final LiveData<List<Phrase>> phrasesListObservable  = phraseViewModel.getAll();
 
         phrasesListObservable.observe(this, new Observer<List<Phrase>>() {
             @Override
@@ -155,6 +156,7 @@ public class TranslateActivity extends AppCompatActivity implements AdapterClick
 
                 selectedLanguage = languageSubscriptionsList.get(spinnerLanguages.getSelectedItemPosition() - 1);
                 constraintViwExtra.setVisibility(View.INVISIBLE);
+                btnTranslate.setVisibility(View.VISIBLE);
                 txtTranslatedPhrase.setText("");
             }
 
@@ -175,6 +177,7 @@ public class TranslateActivity extends AppCompatActivity implements AdapterClick
                 imagePronounceRefresh.startAnimation(Utility.refreshAnimation());
                 btnSpeech.setVisibility(View.INVISIBLE);
                 String s = txtTranslatedPhrase.getText().toString();
+                TextToSpeechService.getShareInstance().setLanguageCode(selectedLanguage.getLan_code());
                 TextToSpeechService.getShareInstance().speech(s);
             }
         });
@@ -191,7 +194,7 @@ public class TranslateActivity extends AppCompatActivity implements AdapterClick
     private void setSpinnerValues() {
 
         ArrayList stringList = new ArrayList();
-        final LiveData<List<LanguageSubscription>> languageSubListObservable  = languageSubscriptionViewModel.getAll(Constant.LOGGING_USER.getU_id());
+        final LiveData<List<LanguageSubscription>> languageSubListObservable  = languageSubscriptionViewModel.getAll();
 
         //set data to spinner
         languageSubListObservable.observe(this, new Observer<List<LanguageSubscription>>() {
@@ -224,9 +227,8 @@ public class TranslateActivity extends AppCompatActivity implements AdapterClick
         translate.setP_id(selectedPhrase.pid);
         translate.setLanguageId(selectedLanguage.getName());
         translate.setTranslatePhrase(txtTranslatedPhrase.getText().toString().toLowerCase());
-        translate.setUser(Constant.LOGGING_USER.getU_id());
 
-        final LiveData<Translate> isExistsObservable  = translateViewModel.isExistsPhrase(translate.getP_id(),translate.getLanguageId(),translate.getUser());
+        final LiveData<Translate> isExistsObservable  = translateViewModel.isExistsPhrase(translate.getP_id(),translate.getLanguageId());
 
         isExistsObservable.observe(this, new Observer<Translate>() {
             @Override
@@ -249,9 +251,8 @@ public class TranslateActivity extends AppCompatActivity implements AdapterClick
         translate.setP_id(selectedPhrase.pid);
         translate.setLanguageId(selectedLanguage.getName());
         translate.setTranslatePhrase(txtTranslatedPhrase.getText().toString().toLowerCase());
-        translate.setUser(Constant.LOGGING_USER.getU_id());
 
-        final LiveData<Translate> isExistsObservable  = translateViewModel.isExistsPhrase(translate.getP_id(),translate.getLanguageId(),translate.getUser());
+        final LiveData<Translate> isExistsObservable  = translateViewModel.isExistsPhrase(translate.getP_id(),translate.getLanguageId());
 
         isExistsObservable.observe(this, new Observer<Translate>() {
             @Override
@@ -339,6 +340,11 @@ public class TranslateActivity extends AppCompatActivity implements AdapterClick
             Toast.makeText(TranslateActivity.this, "Failed translation",
                     Toast.LENGTH_LONG).show();
         }
+    }
+
+    @Override
+    public void getTranslateListResult(TranslateModel model) {
+
     }
 
     //MARK: Text to Speech service implement

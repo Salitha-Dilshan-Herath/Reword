@@ -15,8 +15,6 @@ import androidx.lifecycle.ViewModelProvider;
 
 import com.google.android.material.textfield.TextInputLayout;
 import com.iit.reword.R;
-import com.iit.reword.roomdb.model.User;
-import com.iit.reword.roomdb.viewModel.UserViewModel;
 import com.iit.reword.utility.Constant;
 import com.iit.reword.utility.Typewriter;
 
@@ -30,7 +28,6 @@ public class LoginActivity extends AppCompatActivity implements TextWatcher {
     private TextInputLayout passwordTextInputLayout;
 
     //MARK: Instance Variable
-    private UserViewModel userViewModel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,7 +40,6 @@ public class LoginActivity extends AppCompatActivity implements TextWatcher {
 
     private void setupActivity() {
 
-        userViewModel = new ViewModelProvider(this).get(UserViewModel.class);
 
         txtWelcome = findViewById(R.id.txtWelcome);
         btnSignup = findViewById(R.id.btnSignup);
@@ -100,44 +96,44 @@ public class LoginActivity extends AppCompatActivity implements TextWatcher {
 
     private void validateCredential() {
 
-        String username = usernameTextInputLayout.getEditText().getText().toString();
-        String password = passwordTextInputLayout.getEditText().getText().toString();
-
-
-        if (!isValidateUserInputs(username, password)) {
-            return;
-        }
-
-        final LiveData<User> isExistsUsersObservable = userViewModel.isExistsUsers(username);
-
-        isExistsUsersObservable.observe(this, new Observer<User>() {
-            @Override
-            public void onChanged(User user) {
-
-                isExistsUsersObservable.removeObserver(this);
-
-                if (user != null) {
-                    if (user.getPassword().equals(password)) {
-
-                        userViewModel.updateUserStatus(user.getU_id(), true);
-                        Constant.LOGGING_USER = user;
-
-                        Toast.makeText(LoginActivity.this, "User login successful",
-                                Toast.LENGTH_LONG).show();
-
-                        Intent intent = new Intent(LoginActivity.this, HomeActivity.class);
-                        startActivity(intent);
-
-                    } else {
-                        Toast.makeText(LoginActivity.this, "Invalid username or password", Toast.LENGTH_LONG).show();
-                    }
-                }else{
-                    Toast.makeText(LoginActivity.this, "Invalid username or password", Toast.LENGTH_LONG).show();
-
-                }
-
-            }
-        });
+//        String username = usernameTextInputLayout.getEditText().getText().toString();
+//        String password = passwordTextInputLayout.getEditText().getText().toString();
+//
+//
+//        if (!isValidateUserInputs(username, password)) {
+//            return;
+//        }
+//
+//        final LiveData<User> isExistsUsersObservable = userViewModel.isExistsUsers(username);
+//
+//        isExistsUsersObservable.observe(this, new Observer<User>() {
+//            @Override
+//            public void onChanged(User user) {
+//
+//                isExistsUsersObservable.removeObserver(this);
+//
+//                if (user != null) {
+//                    if (user.getPassword().equals(password)) {
+//
+//                        userViewModel.updateUserStatus(user.getU_id(), true);
+//                        Constant.LOGGING_USER = user;
+//
+//                        Toast.makeText(LoginActivity.this, "User login successful",
+//                                Toast.LENGTH_LONG).show();
+//
+//                        Intent intent = new Intent(LoginActivity.this, HomeActivity.class);
+//                        startActivity(intent);
+//
+//                    } else {
+//                        Toast.makeText(LoginActivity.this, "Invalid username or password", Toast.LENGTH_LONG).show();
+//                    }
+//                }else{
+//                    Toast.makeText(LoginActivity.this, "Invalid username or password", Toast.LENGTH_LONG).show();
+//
+//                }
+//
+//            }
+//        });
     }
 
     @Override

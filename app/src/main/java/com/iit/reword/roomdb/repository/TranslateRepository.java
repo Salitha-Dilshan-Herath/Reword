@@ -27,16 +27,20 @@ public class TranslateRepository {
         });
     }
 
-    public LiveData<Translate> isExistsPhrase(int pId, String lanId, int userId) {
-        return translateDao.isExistsPhrase(pId, lanId, userId);
+    public LiveData<Translate> isExistsPhrase(int pId, String lanId) {
+        return translateDao.isExistsPhrase(pId, lanId);
     }
 
     public LiveData<List<Translate>> isExistsPhrase() {
         return translateDao.isExistsPhrase();
     }
 
-    public LiveData<List<OfflineTranslate>>getTranslateWords(String lanId, int userId){
+    public LiveData<List<OfflineTranslate>>getTranslateWords(String lanId){
 
-        return translateDao.getTranslateWord(lanId,userId);
+        return translateDao.getTranslateWord(lanId);
+    }
+
+    public LiveData<Translate> getExistsPhrase(int pId, String lanId) {
+        return translateDao.getExistsPhrase(pId, lanId);
     }
 }

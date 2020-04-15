@@ -14,9 +14,6 @@ import androidx.lifecycle.ViewModelProvider;
 
 import com.google.android.material.textfield.TextInputLayout;
 import com.iit.reword.R;
-import com.iit.reword.roomdb.DbHandler;
-import com.iit.reword.roomdb.model.User;
-import com.iit.reword.roomdb.viewModel.UserViewModel;
 import com.iit.reword.utility.Utility;
 
 import java.util.Date;
@@ -32,9 +29,7 @@ public class SignupActivity extends AppCompatActivity implements TextWatcher {
     private String rePassword;
     private Button btnSignup;
 
-   //MARK: Instance Variable
-   private UserViewModel userViewModel;
-
+   //MARK: Instance Variab
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -46,7 +41,6 @@ public class SignupActivity extends AppCompatActivity implements TextWatcher {
 
     private void setupview() {
 
-        userViewModel = new ViewModelProvider(this).get(UserViewModel.class);
 
         usernameTextInputLayout    = findViewById(R.id.txtUsername);
         passwordTextInputLayout    = findViewById(R.id.txtPassword);
@@ -105,32 +99,32 @@ public class SignupActivity extends AppCompatActivity implements TextWatcher {
 
     private void insertNewUser () {
 
-        final LiveData<User> isExistsUsersObservable = userViewModel.isExistsUsers(username);
-        isExistsUsersObservable.observe(this, new Observer<User>() {
-            @Override
-            public void onChanged(User user) {
-                if(user == null){
-                    User newUser = new User();
-                    newUser.setUsername(username);
-                    newUser.setPassword(password);
-                    newUser.setCreatedDate(new Date().toString());
-                    newUser.setLogin(false);
-
-                    userViewModel.insert(newUser);
-                    Toast.makeText(SignupActivity.this, "User registered successful",
-                            Toast.LENGTH_LONG).show();
-
-                    SignupActivity.this.finish();
-
-
-                }else {
-                    Toast.makeText(SignupActivity.this, "This user is already registered. Please enter another email",
-                            Toast.LENGTH_LONG).show();
-                }
-
-                isExistsUsersObservable.removeObserver(this);
-            }
-        });
+//        final LiveData<User> isExistsUsersObservable = userViewModel.isExistsUsers(username);
+//        isExistsUsersObservable.observe(this, new Observer<User>() {
+//            @Override
+//            public void onChanged(User user) {
+//                if(user == null){
+//                    User newUser = new User();
+//                    newUser.setUsername(username);
+//                    newUser.setPassword(password);
+//                    newUser.setCreatedDate(new Date().toString());
+//                    newUser.setLogin(false);
+//
+//                    userViewModel.insert(newUser);
+//                    Toast.makeText(SignupActivity.this, "User registered successful",
+//                            Toast.LENGTH_LONG).show();
+//
+//                    SignupActivity.this.finish();
+//
+//
+//                }else {
+//                    Toast.makeText(SignupActivity.this, "This user is already registered. Please enter another email",
+//                            Toast.LENGTH_LONG).show();
+//                }
+//
+//                isExistsUsersObservable.removeObserver(this);
+//            }
+//        });
     }
 
 

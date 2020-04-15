@@ -67,7 +67,7 @@ public class AddPhrasesActivity extends AppCompatActivity implements TextWatcher
     private void addPhraseToDB(String txtphrase) {
 
 
-        final LiveData<Phrase> isExistsPhrasesObservable = phraseViewModel.isExists(txtphrase, Constant.LOGGING_USER.getU_id());
+        final LiveData<Phrase> isExistsPhrasesObservable = phraseViewModel.isExists(txtphrase);
 
         isExistsPhrasesObservable.observe(this, new Observer<Phrase>() {
 
@@ -85,7 +85,6 @@ public class AddPhrasesActivity extends AppCompatActivity implements TextWatcher
 
                 Phrase phraseObj = new Phrase();
                 phraseObj.setPhrase(txtphrase);
-                phraseObj.setUser(Constant.LOGGING_USER.getU_id());
                 phraseViewModel.insert(phraseObj);
 
                 phraseTextInputLayout.getEditText().setText(null);

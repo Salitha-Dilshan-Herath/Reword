@@ -18,8 +18,8 @@ public class LanguageSubscriptionRepository {
         languageSubscriptionDao = DbHandler.getAppDatabaseLive(application).languageSubscriptionDao();
     }
 
-    public LiveData<List<LanguageSubscription>> getAll(int u_id) {
-        return  languageSubscriptionDao.getAll(u_id);
+    public LiveData<List<LanguageSubscription>> getAll() {
+        return  languageSubscriptionDao.getAll();
     }
 
     public void insert(LanguageSubscription language) {
@@ -28,9 +28,9 @@ public class LanguageSubscriptionRepository {
         });
     }
 
-    public void delete(int u_id) {
+    public void delete() {
         DbHandler.databaseWriteExecutor.execute(() -> {
-            languageSubscriptionDao.delete(u_id);
+            languageSubscriptionDao.delete();
         });
     }
 }

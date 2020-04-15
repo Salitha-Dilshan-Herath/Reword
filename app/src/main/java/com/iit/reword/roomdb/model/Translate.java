@@ -8,14 +8,6 @@ import androidx.room.PrimaryKey;
 
 @Entity(tableName = "translate", foreignKeys = {
         @ForeignKey(
-                entity = User.class,
-                parentColumns = "u_id",
-                childColumns = "user",
-                onDelete = ForeignKey.CASCADE,
-                onUpdate = ForeignKey.CASCADE
-        ),
-
-        @ForeignKey(
                 entity = Phrase.class,
                 parentColumns = "p_id",
                 childColumns = "p_id",
@@ -44,8 +36,6 @@ public class Translate {
     @ColumnInfo(name = "translate_phrase")
     public String translatePhrase;
 
-    @ColumnInfo(name = "user")
-    public int user;
 
     @ColumnInfo(name = "language_id")
     public String languageId;
@@ -66,14 +56,6 @@ public class Translate {
         this.translatePhrase = translatePhrase;
     }
 
-    public int getUser() {
-        return user;
-    }
-
-    public void setUser(int user) {
-        this.user = user;
-    }
-
     public String getLanguageId() {
         return languageId;
     }
@@ -88,7 +70,6 @@ public class Translate {
                 "tid=" + tid +
                 ", p_id=" + p_id +
                 ", translatePhrase='" + translatePhrase + '\'' +
-                ", user=" + user +
                 ", languageId='" + languageId + '\'' +
                 '}';
     }

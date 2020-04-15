@@ -21,11 +21,11 @@ public class PhraseViewModel extends AndroidViewModel {
         phraseRepository = new PhraseRepository(application);
     }
 
-    public LiveData<List<Phrase>> getAll(int user) {
-        return phraseRepository.getAll(user);
+    public LiveData<List<Phrase>> getAll() {
+        return phraseRepository.getAll();
     }
-    public LiveData<Phrase> isExists(String phrase, int u_id) {
-        return phraseRepository.isExists(phrase,u_id);
+    public LiveData<Phrase> isExists(String phrase) {
+        return phraseRepository.isExists(phrase);
     }
 
     public void insert(Phrase phrase){

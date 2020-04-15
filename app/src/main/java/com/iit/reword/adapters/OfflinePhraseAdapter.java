@@ -12,14 +12,15 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.iit.reword.R;
 import com.iit.reword.model.OfflineTranslate;
+import com.iit.reword.model.TranslateModel;
 
 import java.util.List;
 
 public class OfflinePhraseAdapter extends  RecyclerView.Adapter<OfflinePhraseAdapter.OfflinePhraseAdapterViewHolder> {
 
-    private List<OfflineTranslate> offlineTranslateList;
+    private List<TranslateModel> offlineTranslateList;
 
-    public OfflinePhraseAdapter(List<OfflineTranslate> offlineTranslateList) {
+    public OfflinePhraseAdapter(List<TranslateModel> offlineTranslateList) {
         this.offlineTranslateList = offlineTranslateList;
     }
 
@@ -39,9 +40,15 @@ public class OfflinePhraseAdapter extends  RecyclerView.Adapter<OfflinePhraseAda
 
     @Override
     public void onBindViewHolder(@NonNull OfflinePhraseAdapterViewHolder holder, int position) {
-        final OfflineTranslate offlineTranslate  = offlineTranslateList.get(position);
-        holder.txtEnglish.setText(offlineTranslate.getPhrase());
-        holder.txtTranslate.setText(offlineTranslate.getTranslate_phrase());
+        final TranslateModel offlineTranslate  = offlineTranslateList.get(position);
+        holder.txtEnglish.setText(offlineTranslate.getWord());
+
+        if (offlineTranslate.getTranslatedWord() == null){
+            holder.txtTranslate.setText("Not Available");
+        }else {
+            holder.txtTranslate.setText(offlineTranslate.getTranslatedWord());
+        }
+
     }
 
     @Override
@@ -49,6 +56,16 @@ public class OfflinePhraseAdapter extends  RecyclerView.Adapter<OfflinePhraseAda
         if(offlineTranslateList != null)
             return offlineTranslateList.size();
         return 0;
+    }
+
+    @Override
+    public long getItemId(int position) {
+        return position;
+    }
+
+    @Override
+    public int getItemViewType(int position) {
+        return  position;
     }
 
     public class OfflinePhraseAdapterViewHolder extends RecyclerView.ViewHolder {
