@@ -19,13 +19,16 @@ public interface TranslateDao {
     @Query("SELECT * FROM translate where p_id = :pId AND language_id = :lanId ")
     LiveData<Translate> isExistsPhrase(int pId, String lanId);
 
-    @Query("SELECT * FROM translate ")
-    LiveData<List<Translate>> isExistsPhrase();
-
-    @Query("SELECT * from translate INNER JOIN phrase on translate.p_id = phrase.p_id WHERE language_id = :lanId ")
-    LiveData<List<OfflineTranslate>>getTranslateWord(String lanId);
+//    @Query("SELECT * FROM translate ")
+//    LiveData<List<Translate>> isExistsPhrase();
+//
+//    @Query("SELECT * from translate INNER JOIN phrase on translate.p_id = phrase.p_id WHERE language_id = :lanId ")
+//    LiveData<List<OfflineTranslate>>getTranslateWord(String lanId);
 
     @Query("SELECT * FROM translate WHERE language_id = :lanId  AND p_id = :pId")
     LiveData<Translate> getExistsPhrase(int pId, String lanId);
+
+    @Query("DELETE FROM translate WHERE p_id= :pid")
+    void delete(int pid);
 
 }

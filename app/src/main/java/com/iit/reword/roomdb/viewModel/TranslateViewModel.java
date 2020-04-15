@@ -34,16 +34,14 @@ public class TranslateViewModel extends AndroidViewModel {
         return translateRepository.isExistsPhrase(pId, lanId);
     }
 
-    public LiveData<List<Translate>> isExistsPhrase() {
-        return translateRepository.isExistsPhrase();
-    }
-
-    public LiveData<List<OfflineTranslate>>getTranslateWords(String lanId){
-
-        return translateRepository.getTranslateWords(lanId);
-    }
 
     public LiveData<Translate> getExistsPhrase(int pId, String lanId) {
         return translateRepository.getExistsPhrase(pId, lanId);
+    }
+
+    public void delete(int pid) {
+        DbHandler.databaseWriteExecutor.execute(() -> {
+            translateRepository.delete(pid);
+        });
     }
 }

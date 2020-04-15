@@ -20,6 +20,7 @@ import com.iit.reword.adapters.PhraseEditAdapter;
 import com.iit.reword.roomdb.DbHandler;
 import com.iit.reword.roomdb.model.Phrase;
 import com.iit.reword.roomdb.viewModel.PhraseViewModel;
+import com.iit.reword.roomdb.viewModel.TranslateViewModel;
 import com.iit.reword.utility.Constant;
 import com.iit.reword.utility.interfaces.EditPhraseRadioClickListener;
 import com.iit.reword.utility.Utility;
@@ -40,6 +41,7 @@ public class EditPhrasesActivity extends AppCompatActivity implements EditPhrase
 
     //MARK: Instance Variable
     private PhraseViewModel phraseViewModel;
+    private TranslateViewModel translateViewModel;
 
     //MARK: Life Cycle methods
     @Override
@@ -54,6 +56,7 @@ public class EditPhrasesActivity extends AppCompatActivity implements EditPhrase
     private void setupView() {
 
         phraseViewModel = new ViewModelProvider(this).get(PhraseViewModel.class);
+        translateViewModel = new ViewModelProvider(this).get(TranslateViewModel.class);
 
         recyclerView = findViewById(R.id.recycleViewEditPhrase);
         editTextInputLayout = findViewById(R.id.editPhraseTextInputLayout);
@@ -131,6 +134,8 @@ public class EditPhrasesActivity extends AppCompatActivity implements EditPhrase
                 phrases.get(selectedIndex).setPhrase(updatePhrase);
                 selectedPhrase = phrases.get(selectedIndex);
                 phraseEditAdapter.notifyDataSetChanged();
+
+                translateViewModel.delete(selectedPhrase.getPid());
 
                 Toast.makeText(EditPhrasesActivity.this, "Phrase update success",
                         Toast.LENGTH_LONG).show();

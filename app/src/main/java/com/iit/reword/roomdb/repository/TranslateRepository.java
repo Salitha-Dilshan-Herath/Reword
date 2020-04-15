@@ -31,16 +31,14 @@ public class TranslateRepository {
         return translateDao.isExistsPhrase(pId, lanId);
     }
 
-    public LiveData<List<Translate>> isExistsPhrase() {
-        return translateDao.isExistsPhrase();
-    }
-
-    public LiveData<List<OfflineTranslate>>getTranslateWords(String lanId){
-
-        return translateDao.getTranslateWord(lanId);
-    }
 
     public LiveData<Translate> getExistsPhrase(int pId, String lanId) {
         return translateDao.getExistsPhrase(pId, lanId);
+    }
+
+    public void delete(int pid) {
+        DbHandler.databaseWriteExecutor.execute(() -> {
+            translateDao.delete(pid);
+        });
     }
 }

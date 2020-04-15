@@ -12,6 +12,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.cardview.widget.CardView;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.Observer;
@@ -58,6 +59,7 @@ public class TranslateActivity extends AppCompatActivity implements AdapterClick
     private Button btnSpeech;
     private Button btnViewAll;
     private ConstraintLayout constraintViwExtra;
+    private CardView cardViewPhrases;
 
     //MARK: Instance Variables
     private ArrayAdapter adapter;
@@ -94,6 +96,7 @@ public class TranslateActivity extends AppCompatActivity implements AdapterClick
         btnSpeech             = findViewById(R.id.btnSpeech);
         imagePronounceRefresh = findViewById(R.id.imagePronounceRefresh);
         btnViewAll            = findViewById(R.id.btnViewAll);
+        cardViewPhrases       = findViewById(R.id.card_view_phrases);
 
         constraintViwExtra.setVisibility(View.INVISIBLE);
         imgRefresh.setVisibility(View.INVISIBLE);
@@ -158,6 +161,7 @@ public class TranslateActivity extends AppCompatActivity implements AdapterClick
                 constraintViwExtra.setVisibility(View.INVISIBLE);
                 btnTranslate.setVisibility(View.VISIBLE);
                 txtTranslatedPhrase.setText("");
+                cardViewPhrases.setVisibility(View.VISIBLE);
             }
 
             @Override
