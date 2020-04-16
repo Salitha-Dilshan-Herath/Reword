@@ -70,10 +70,6 @@ public class SignupActivity extends AppCompatActivity implements TextWatcher {
                     return;
                 }
 
-                if (!Utility.isValidEmail(username.trim())) {
-                    usernameTextInputLayout.setError("Invalid email");
-                    return;
-                }
 
                 if (password.trim().equals("")) {
                     passwordTextInputLayout.setError("Please enter password");

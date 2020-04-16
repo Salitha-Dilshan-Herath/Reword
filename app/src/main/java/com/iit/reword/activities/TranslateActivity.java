@@ -177,6 +177,12 @@ public class TranslateActivity extends AppCompatActivity implements AdapterClick
                 if (txtTranslatedPhrase.getText().toString().equals(""))
                     return;
 
+                if (!Utility.isInternetReachability(TranslateActivity.this)) {
+                    Toast.makeText(TranslateActivity.this, "Your internet connection appears to be offline",
+                            Toast.LENGTH_LONG).show();
+                    return;
+                }
+
                 imagePronounceRefresh.setVisibility(View.VISIBLE);
                 imagePronounceRefresh.startAnimation(Utility.refreshAnimation());
                 btnSpeech.setVisibility(View.INVISIBLE);
@@ -265,6 +271,18 @@ public class TranslateActivity extends AppCompatActivity implements AdapterClick
                 isExistsObservable.removeObserver(this);
 
                 if (isTranslate == null){
+
+                    if (!Utility.isInternetReachability(TranslateActivity.this)) {
+
+                        btnTranslate.setVisibility(View.VISIBLE);
+                        imgRefresh.setVisibility(View.INVISIBLE);
+                        imgRefresh.clearAnimation();
+
+                        Toast.makeText(TranslateActivity.this, "Your internet connection appears to be offline",
+                                Toast.LENGTH_LONG).show();
+                        return;
+                    }
+
                     TranslateModel translateModel = new TranslateModel(txtSelectedPhraseText.getText().toString(), selectedLanguage.getLan_code());
                     LanguageTranslatorService.getShareInstance().translate(translateModel);
                 }else {

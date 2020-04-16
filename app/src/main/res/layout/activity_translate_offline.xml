@@ -10,7 +10,7 @@
         android:id="@+id/constraintLayout9"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:background="@color/colorAccent"
+        android:background="#6713AB"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHeight_percent=".1"
         app:layout_constraintStart_toStartOf="parent"
@@ -28,8 +28,7 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            />
+            app:layout_constraintTop_toTopOf="parent" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -61,7 +60,7 @@
             android:id="@+id/textView6"
             android:layout_width="0dp"
             android:layout_height="0dp"
-            android:background="@color/colorAccent"
+            android:background="#6713AB"
             android:fontFamily="@font/baumans"
             android:gravity="center"
             android:text="English"
@@ -76,7 +75,7 @@
             android:id="@+id/txtHeaderSelectedLanguage"
             android:layout_width="0dp"
             android:layout_height="0dp"
-            android:background="@color/colorAccent"
+            android:background="#6713AB"
             android:fontFamily="@font/baumans"
             android:gravity="center"
             android:text="None"

@@ -71,7 +71,7 @@ public class LaunchActivity extends AppCompatActivity implements LanguageTransla
     @Override
     public void getLanguageList(IdentifiableLanguages languages) {
 
-        //System.out.println(languages);
+        System.out.println(languages);
 
         if (languages == null)
             return;

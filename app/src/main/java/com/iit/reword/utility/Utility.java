@@ -27,7 +27,7 @@ public final class Utility {
 
     }
 
-
+    //MARK: Check internet connectivity
     public static boolean isInternetReachability(Context context){
         boolean connected = false;
         ConnectivityManager connectivityManager = (ConnectivityManager)context.getSystemService(Context.CONNECTIVITY_SERVICE);

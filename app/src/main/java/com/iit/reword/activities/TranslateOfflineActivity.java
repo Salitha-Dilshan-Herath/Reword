@@ -109,12 +109,13 @@ public class TranslateOfflineActivity extends AppCompatActivity implements Langu
                              boolean isAlreadyTranslate = true;
 
                              if(translate == null){
+                                 isAlreadyTranslate = false;
                                  TranslateModel translateModel = new TranslateModel(phraseObj.getPhrase(),TranslateOfflineActivity.this.languageCode);
                                  translateModel.setListIndex(index);
                                  translateModel.setPhraseId(phraseObj.getPid());
                                  translateModel.setLanguageName(TranslateOfflineActivity.this.languageName);
                                  LanguageTranslatorService.getShareInstance().translateList(translateModel);
-                                 isAlreadyTranslate = false;
+
                              }else {
 
                                  TranslateModel translateModel = new TranslateModel(phraseObj.getPhrase(), TranslateOfflineActivity.this.languageName);
@@ -123,8 +124,8 @@ public class TranslateOfflineActivity extends AppCompatActivity implements Langu
                              }
 
                              if(index == phrases.size() -1 && isAlreadyTranslate){
-                                 setupRecycleView();
-                                 System.out.println("Translate Complete Done......!");
+                                 setupRecycleView(translateModelList);
+                                 System.out.println("Translate Complete Done......!  with isAlreadyTranslate");
                                  pd.dismiss();
                              }
                          }
@@ -135,9 +136,9 @@ public class TranslateOfflineActivity extends AppCompatActivity implements Langu
         });
     }
 
-    private void setupRecycleView(){
+    private void setupRecycleView(List<TranslateModel> translateModelList){
 
-        OfflinePhraseAdapter offlinePhraseAdapter = new OfflinePhraseAdapter(this.translateModelList);
+        OfflinePhraseAdapter offlinePhraseAdapter = new OfflinePhraseAdapter(translateModelList);
         recyclerView.setAdapter(offlinePhraseAdapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
         DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(recyclerView.getContext(), LinearLayoutManager.VERTICAL);
@@ -154,20 +155,8 @@ public class TranslateOfflineActivity extends AppCompatActivity implements Langu
         translate.setLanguageId(model.getLanguageName());
         translate.setTranslatePhrase(model.getTranslatedWord());
 
-        final LiveData<Translate> isExistsObservable  = translateViewModel.isExistsPhrase(translate.getP_id(),translate.getLanguageId());
-
-        isExistsObservable.observe(this, new Observer<Translate>() {
-            @Override
-            public void onChanged(Translate isTranslate) {
-
-                isExistsObservable.removeObserver(this);
-
-                if (isTranslate == null){
-                    translateViewModel.insert(translate);
-                    System.out.println("Save data to db success " + translate.toString());
-                }
-            }
-        });
+        translateViewModel.insert(translate);
+        System.out.println("Save data to db success " + translate.toString());
     }
 
     @Override
@@ -188,8 +177,8 @@ public class TranslateOfflineActivity extends AppCompatActivity implements Langu
         savePhrase(model);
 
         if(model.getListIndex() == phraseList.size() - 1){
-            setupRecycleView();
-            System.out.println("Translate Complete Done......!");
+            System.out.println(translateModelList.size() + " Translate Complete Done......! " + model.getTranslatedWord());
+            setupRecycleView(translateModelList);
             pd.dismiss();
         }
     }
