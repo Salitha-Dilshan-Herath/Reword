@@ -55,13 +55,36 @@
                 style="?attr/materialButtonOutlinedStyle"
                 android:layout_width="0dp"
                 android:layout_height="0dp"
-                android:text="Add Phrases"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHeight_percent=".7"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintWidth_percent=".65"
-                app:layout_constraintHeight_percent=".65"/>
+                app:layout_constraintWidth_percent=".7" />
+
+            <ImageView
+                android:id="@+id/imageView4"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_marginTop="24dp"
+                app:layout_constraintEnd_toEndOf="@+id/btnAddPhrases"
+                app:layout_constraintHeight_percent=".25"
+                app:layout_constraintStart_toStartOf="@+id/btnAddPhrases"
+                app:layout_constraintTop_toTopOf="@+id/btnAddPhrases"
+                app:srcCompat="@drawable/add" />
+
+            <TextView
+                android:id="@+id/textView10"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:fontFamily="sans-serif-medium"
+                android:gravity="center"
+                android:text="ADD PHRASES"
+                android:textColor="#6713AB"
+                app:layout_constraintBottom_toBottomOf="@+id/btnAddPhrases"
+                app:layout_constraintEnd_toEndOf="@+id/btnAddPhrases"
+                app:layout_constraintStart_toStartOf="@+id/btnAddPhrases"
+                app:layout_constraintTop_toBottomOf="@+id/imageView4" />
         </androidx.constraintlayout.widget.ConstraintLayout>
 
         <androidx.constraintlayout.widget.ConstraintLayout
@@ -74,16 +97,40 @@
 
             <Button
                 android:id="@+id/btnDisplayPhrase"
+                style="?attr/materialButtonOutlinedStyle"
                 android:layout_width="0dp"
                 android:layout_height="0dp"
-                android:text="Display Phrases"
-                style="?attr/materialButtonOutlinedStyle"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHeight_percent=".7"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintWidth_percent=".65"
-                app:layout_constraintHeight_percent=".65"/>
+                app:layout_constraintWidth_percent=".7" />
+
+            <ImageView
+                android:id="@+id/imageView6"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_marginTop="24dp"
+                app:layout_constraintEnd_toEndOf="@+id/btnDisplayPhrase"
+                app:layout_constraintStart_toStartOf="@+id/btnDisplayPhrase"
+                app:layout_constraintTop_toTopOf="@+id/btnDisplayPhrase"
+                app:srcCompat="@drawable/display"
+                app:layout_constraintHeight_percent=".25"/>
+
+            <TextView
+                android:id="@+id/textView12"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:fontFamily="sans-serif-medium"
+                android:gravity="center"
+                android:text="DISPLAY PHRASES"
+                android:textColor="#6713AB"
+                app:layout_constraintBottom_toBottomOf="@+id/btnDisplayPhrase"
+                app:layout_constraintEnd_toEndOf="@+id/btnDisplayPhrase"
+                app:layout_constraintStart_toStartOf="@+id/btnDisplayPhrase"
+                app:layout_constraintTop_toBottomOf="@+id/imageView6" />
+
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -110,13 +157,36 @@
                 style="?attr/materialButtonOutlinedStyle"
                 android:layout_width="0dp"
                 android:layout_height="0dp"
-                android:text="Edit Phrases"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHeight_percent=".65"
+                app:layout_constraintHeight_percent=".7"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintWidth_percent=".65" />
+                app:layout_constraintWidth_percent=".7" />
+
+            <TextView
+                android:id="@+id/textView13"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:fontFamily="sans-serif-medium"
+                android:gravity="center"
+                android:text="EDIT PHRASES"
+                android:textColor="#6713AB"
+                app:layout_constraintBottom_toBottomOf="@+id/btnEditPhrases"
+                app:layout_constraintEnd_toEndOf="@+id/btnEditPhrases"
+                app:layout_constraintStart_toStartOf="@+id/btnEditPhrases"
+                app:layout_constraintTop_toBottomOf="@+id/imageView7" />
+
+            <ImageView
+                android:id="@+id/imageView7"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_marginTop="24dp"
+                app:layout_constraintEnd_toEndOf="@+id/btnEditPhrases"
+                app:layout_constraintStart_toStartOf="@+id/btnEditPhrases"
+                app:layout_constraintTop_toTopOf="@+id/btnEditPhrases"
+                app:srcCompat="@drawable/edit"
+                app:layout_constraintHeight_percent=".25"/>
         </androidx.constraintlayout.widget.ConstraintLayout>
 
         <androidx.constraintlayout.widget.ConstraintLayout
@@ -134,13 +204,37 @@
                 style="?attr/materialButtonOutlinedStyle"
                 android:layout_width="0dp"
                 android:layout_height="0dp"
-                android:text="Translate"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHeight_percent=".65"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintWidth_percent=".65" />
+                app:layout_constraintWidth_percent=".7" />
+
+            <TextView
+                android:id="@+id/textView14"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:fontFamily="sans-serif-medium"
+                android:gravity="center"
+                android:text="TRANSLATE"
+                android:textColor="#6713AB"
+                app:layout_constraintBottom_toBottomOf="@+id/btnTranslator"
+                app:layout_constraintEnd_toEndOf="@+id/btnTranslator"
+                app:layout_constraintStart_toStartOf="@+id/btnTranslator"
+                app:layout_constraintTop_toBottomOf="@+id/imageView8" />
+
+            <ImageView
+                android:id="@+id/imageView8"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_marginTop="24dp"
+                app:layout_constraintEnd_toEndOf="@+id/btnTranslator"
+                app:layout_constraintHorizontal_bias="0.871"
+                app:layout_constraintStart_toStartOf="@+id/btnTranslator"
+                app:layout_constraintTop_toTopOf="@+id/btnTranslator"
+                app:srcCompat="@drawable/translate"
+                app:layout_constraintHeight_percent=".25"/>
         </androidx.constraintlayout.widget.ConstraintLayout>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
@@ -162,19 +256,43 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
 
+            <TextView
+                android:id="@+id/textView16"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:fontFamily="sans-serif-medium"
+                android:gravity="center"
+                android:text="LANGUAGE SUBSCRIPTION"
+                android:textColor="#6713AB"
+                app:layout_constraintBottom_toBottomOf="@+id/btnSubscription"
+                app:layout_constraintEnd_toEndOf="@+id/btnSubscription"
+                app:layout_constraintStart_toStartOf="@+id/btnSubscription"
+                app:layout_constraintTop_toBottomOf="@+id/imageView9" />
+
             <Button
                 android:id="@+id/btnSubscription"
                 style="?attr/materialButtonOutlinedStyle"
                 android:layout_width="0dp"
                 android:layout_height="0dp"
-                android:text="Language Subscription"
                 android:textSize="14sp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHeight_percent=".65"
+                app:layout_constraintHeight_percent=".7"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintWidth_percent=".65" />
+                app:layout_constraintWidth_percent=".7" />
+
+            <ImageView
+                android:id="@+id/imageView9"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_marginTop="24dp"
+                app:layout_constraintEnd_toEndOf="@+id/btnSubscription"
+                app:layout_constraintHorizontal_bias="0.495"
+                app:layout_constraintStart_toStartOf="@+id/btnSubscription"
+                app:layout_constraintTop_toTopOf="@+id/btnSubscription"
+                app:srcCompat="@drawable/subsciprtion"
+                app:layout_constraintHeight_percent=".25"/>
         </androidx.constraintlayout.widget.ConstraintLayout>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
