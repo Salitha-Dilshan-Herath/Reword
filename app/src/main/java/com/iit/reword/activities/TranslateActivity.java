@@ -60,6 +60,8 @@ public class TranslateActivity extends AppCompatActivity implements AdapterClick
     private Button btnViewAll;
     private ConstraintLayout constraintViwExtra;
     private CardView cardViewPhrases;
+    private ConstraintLayout viwErrorPanelEmpty;
+    private TextView txtErrorTranslate;
 
     //MARK: Instance Variables
     private ArrayAdapter adapter;
@@ -97,7 +99,10 @@ public class TranslateActivity extends AppCompatActivity implements AdapterClick
         imagePronounceRefresh = findViewById(R.id.imagePronounceRefresh);
         btnViewAll            = findViewById(R.id.btnViewAll);
         cardViewPhrases       = findViewById(R.id.card_view_phrases);
+        viwErrorPanelEmpty    = findViewById(R.id.viwErrorPanelEmpty);
+        txtErrorTranslate     = findViewById(R.id.txtErrorTranslate);
 
+        viwErrorPanelEmpty.setVisibility(View.INVISIBLE);
         constraintViwExtra.setVisibility(View.INVISIBLE);
         imgRefresh.setVisibility(View.INVISIBLE);
         imagePronounceRefresh.setVisibility(View.INVISIBLE);
@@ -105,15 +110,19 @@ public class TranslateActivity extends AppCompatActivity implements AdapterClick
 
         LanguageTranslatorService.getShareInstance().languageTranslatorServiceImpl = TranslateActivity.this;
 
-
         final LiveData<List<Phrase>> phrasesListObservable  = phraseViewModel.getAll();
 
         phrasesListObservable.observe(this, new Observer<List<Phrase>>() {
             @Override
             public void onChanged(List<Phrase> phrases) {
+                if (phrases.size() <= 0 ){
+                    viwErrorPanelEmpty.setVisibility(View.VISIBLE);
+                    return;
+                }
                 phrasesListObservable.removeObserver(this);
                 PhraseDisplayAdapter phraseDisplayAdapter = new PhraseDisplayAdapter(phrases, TranslateActivity.this);
                 recyclerView.setAdapter(phraseDisplayAdapter);
+                setSpinnerValues();
             }
         });
 
@@ -121,7 +130,6 @@ public class TranslateActivity extends AppCompatActivity implements AdapterClick
         recyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
         recyclerView.addItemDecoration(dividerItemDecoration);
 
-        setSpinnerValues();
         setupListeners();
 
     }
@@ -213,6 +221,13 @@ public class TranslateActivity extends AppCompatActivity implements AdapterClick
 
                 languageSubscriptionsList = languageSubscriptions;
                 languageSubListObservable.removeObserver(this);
+
+                viwErrorPanelEmpty.setVisibility(View.INVISIBLE);
+                if (languageSubscriptions.size() <= 0 ){
+                    viwErrorPanelEmpty.setVisibility(View.VISIBLE);
+                    txtErrorTranslate.setText("No subscribe language found");
+                    return;
+                }
 
                 for(LanguageSubscription subscription: languageSubscriptions){
                     stringList.add(subscription.getName());
