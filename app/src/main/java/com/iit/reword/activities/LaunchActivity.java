@@ -82,7 +82,7 @@ public class LaunchActivity extends AppCompatActivity implements LanguageTransla
 
         System.out.println(languages);
 
-        if (languages != null)
+        if (languages == null)
             return;
 
         for (IdentifiableLanguage language : languages.getLanguages()) {

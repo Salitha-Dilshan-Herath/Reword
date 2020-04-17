@@ -13,8 +13,10 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.ibm.watson.language_translator.v3.model.IdentifiableLanguages;
 import com.ibm.watson.language_translator.v3.model.Translation;
@@ -35,18 +37,24 @@ import com.iit.reword.roomdb.viewModel.LanguageViewModel;
 import com.iit.reword.roomdb.viewModel.PhraseViewModel;
 import com.iit.reword.roomdb.viewModel.TranslateViewModel;
 import com.iit.reword.services.LanguageTranslatorService;
+import com.iit.reword.services.TextToSpeechService;
 import com.iit.reword.utility.Constant;
+import com.iit.reword.utility.Utility;
+import com.iit.reword.utility.interfaces.AdapterClickListener;
 import com.iit.reword.utility.interfaces.LanguageTranslatorServiceImpl;
+import com.iit.reword.utility.interfaces.OfflineAdapterCellListener;
+import com.iit.reword.utility.interfaces.TextSpeechServiceImpl;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class TranslateOfflineActivity extends AppCompatActivity implements LanguageTranslatorServiceImpl {
+public class TranslateOfflineActivity extends AppCompatActivity implements LanguageTranslatorServiceImpl, OfflineAdapterCellListener, TextSpeechServiceImpl {
 
     private Spinner spinnerLanguages;
     private RecyclerView recyclerView;
     private TextView txtHeaderSelectedLanguage;
     private ProgressDialog pd ;
+    private Button btnPronounsAll;
 
     //MARK: Instance Variables
     private PhraseViewModel phraseViewModel;
@@ -54,8 +62,8 @@ public class TranslateOfflineActivity extends AppCompatActivity implements Langu
     private List<TranslateModel> translateModelList = new ArrayList();
     private String languageCode;
     private String languageName;
+    private TranslateModel selectedModel;
     private TranslateViewModel translateViewModel;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -73,7 +81,12 @@ public class TranslateOfflineActivity extends AppCompatActivity implements Langu
 
         recyclerView                =  findViewById(R.id.recycleViewOffline);
         txtHeaderSelectedLanguage   = findViewById(R.id.txtHeaderSelectedLanguage);
+        btnPronounsAll              = findViewById(R.id.btnPronounsAll);
         pd                          = new ProgressDialog(TranslateOfflineActivity.this);
+
+        if (!Utility.isInternetReachability(this)) {
+           btnPronounsAll.setVisibility(View.GONE);
+        }
 
         Bundle bundle = getIntent().getExtras();
         languageCode  = bundle.getString("lan_code");
@@ -82,6 +95,8 @@ public class TranslateOfflineActivity extends AppCompatActivity implements Langu
         txtHeaderSelectedLanguage.setText(languageName);
 
         LanguageTranslatorService.getShareInstance().languageTranslatorServiceImpl = this;
+        TextToSpeechService.getShareInstance().textSpeechServiceImpl = this;
+
 
         pd.setMessage("Translating.....");
         pd.show();
@@ -134,11 +149,33 @@ public class TranslateOfflineActivity extends AppCompatActivity implements Langu
                  }
             }
         });
+
+        setupListener();
+    }
+
+    private void  setupListener() {
+        btnPronounsAll.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                if(selectedModel == null){
+                    Toast.makeText(TranslateOfflineActivity.this, "Please select phrase / word",
+                            Toast.LENGTH_LONG).show();
+                    return;
+                }
+
+                btnPronounsAll.setEnabled(false);
+                String s = selectedModel.getTranslatedWord();
+                TextToSpeechService.getShareInstance().setLanguageCode(languageCode);
+                TextToSpeechService.getShareInstance().speech(s);
+
+            }
+        });
     }
 
     private void setupRecycleView(List<TranslateModel> translateModelList){
 
-        OfflinePhraseAdapter offlinePhraseAdapter = new OfflinePhraseAdapter(translateModelList);
+        OfflinePhraseAdapter offlinePhraseAdapter = new OfflinePhraseAdapter(translateModelList, this);
         recyclerView.setAdapter(offlinePhraseAdapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
         DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(recyclerView.getContext(), LinearLayoutManager.VERTICAL);
@@ -181,5 +218,16 @@ public class TranslateOfflineActivity extends AppCompatActivity implements Langu
             setupRecycleView(translateModelList);
             pd.dismiss();
         }
+    }
+
+    @Override
+    public void onCellClick(TranslateModel phrase, int index) {
+
+        this.selectedModel = phrase;
+    }
+
+    @Override
+    public void isSuccessSpeech(Boolean status) {
+        btnPronounsAll.setEnabled(true);
     }
 }
