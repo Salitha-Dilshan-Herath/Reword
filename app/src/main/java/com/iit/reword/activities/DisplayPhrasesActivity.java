@@ -7,6 +7,8 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Bundle;
+import android.view.View;
+import android.widget.TextView;
 
 import com.iit.reword.R;
 import com.iit.reword.adapters.PhraseDisplayAdapter;
@@ -21,6 +23,7 @@ public class DisplayPhrasesActivity extends AppCompatActivity {
 
     //MARK: UI Elements
     private RecyclerView recyclerView;
+    private TextView txtError;
 
     //MARK: Instance Variable
     private PhraseViewModel phraseViewModel;
@@ -38,8 +41,17 @@ public class DisplayPhrasesActivity extends AppCompatActivity {
         phraseViewModel = new ViewModelProvider(this).get(PhraseViewModel.class);
 
         recyclerView = findViewById(R.id.recycleViewPhrase);
+        txtError     = findViewById(R.id.txtError);
+
+        txtError.setVisibility(View.INVISIBLE);
 
         phraseViewModel.getAll().observe(this, phrases -> {
+
+            if (phrases.size() == 0){
+                txtError.setVisibility(View.VISIBLE);
+                return;
+            }
+
             PhraseDisplayAdapter phraseDisplayAdapter = new PhraseDisplayAdapter(phrases, null);
             recyclerView.setAdapter(phraseDisplayAdapter);
         });

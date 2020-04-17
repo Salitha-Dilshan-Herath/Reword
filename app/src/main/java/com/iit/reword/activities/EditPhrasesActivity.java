@@ -6,6 +6,7 @@ import android.widget.Button;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
@@ -29,8 +30,15 @@ import java.util.List;
 
 public class EditPhrasesActivity extends AppCompatActivity implements EditPhraseRadioClickListener {
 
+    //MARK: UI Element
     private RecyclerView recyclerView;
     private TextInputLayout editTextInputLayout;
+    private ConstraintLayout viwErrorPanel;
+
+
+    //MARK: Instance Variable
+    private PhraseViewModel phraseViewModel;
+    private TranslateViewModel translateViewModel;
     private Button btnEdit;
     private Button btnSave;
     private PhraseEditAdapter phraseEditAdapter;
@@ -38,10 +46,6 @@ public class EditPhrasesActivity extends AppCompatActivity implements EditPhrase
     private Phrase selectedPhrase = null;
     private int selectedIndex     = -1;
     private Boolean isEditMode    = false;
-
-    //MARK: Instance Variable
-    private PhraseViewModel phraseViewModel;
-    private TranslateViewModel translateViewModel;
 
     //MARK: Life Cycle methods
     @Override
@@ -58,14 +62,22 @@ public class EditPhrasesActivity extends AppCompatActivity implements EditPhrase
         phraseViewModel = new ViewModelProvider(this).get(PhraseViewModel.class);
         translateViewModel = new ViewModelProvider(this).get(TranslateViewModel.class);
 
-        recyclerView = findViewById(R.id.recycleViewEditPhrase);
+        recyclerView        = findViewById(R.id.recycleViewEditPhrase);
         editTextInputLayout = findViewById(R.id.editPhraseTextInputLayout);
-        btnEdit = findViewById(R.id.btnEditPhrase);
-        btnSave = findViewById(R.id.btnSavePhrase);
+        btnEdit             = findViewById(R.id.btnEditPhrase);
+        btnSave             = findViewById(R.id.btnSavePhrase);
+        viwErrorPanel       = findViewById(R.id.viwErrorPanel);
         editTextInputLayout.getEditText().setEnabled(false);
         btnSave.setEnabled(false);
+        viwErrorPanel.setVisibility(View.INVISIBLE);
 
         phraseViewModel.getAll().observe(this, phrases -> {
+
+            if(phrases.size() == 0){
+                viwErrorPanel.setVisibility(View.VISIBLE);
+                return;
+            }
+
             this.phrases = phrases;
             phraseEditAdapter = new PhraseEditAdapter(phrases, this);
             recyclerView.setAdapter(phraseEditAdapter);

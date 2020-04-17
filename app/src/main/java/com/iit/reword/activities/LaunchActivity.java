@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProvider;
@@ -20,6 +21,7 @@ import com.iit.reword.roomdb.model.Language;
 import com.iit.reword.roomdb.viewModel.LanguageViewModel;
 import com.iit.reword.services.LanguageTranslatorService;
 import com.iit.reword.utility.Constant;
+import com.iit.reword.utility.Utility;
 import com.iit.reword.utility.interfaces.LanguageTranslatorServiceImpl;
 
 
@@ -49,9 +51,16 @@ public class LaunchActivity extends AppCompatActivity implements LanguageTransla
         imageView = findViewById(R.id.imgGif);
         Glide.with(this).load(R.drawable.read).into(imageView);
 
-        //Invoke language download method
-        LanguageTranslatorService.getShareInstance().languageTranslatorServiceImpl = this;
-        LanguageTranslatorService.getShareInstance().getAllLanguages();
+        //Check network reachability
+        if(Utility.isInternetReachability(this)){
+            //Invoke language download method
+            LanguageTranslatorService.getShareInstance().languageTranslatorServiceImpl = this;
+            LanguageTranslatorService.getShareInstance().getAllLanguages();
+        }else {
+            Toast.makeText(this, "Your internet connection appears to be offline",
+                    Toast.LENGTH_LONG).show();
+        }
+
 
         //delay for initial page
         int secondsDelayed = 5; // late time
@@ -73,7 +82,7 @@ public class LaunchActivity extends AppCompatActivity implements LanguageTransla
 
         System.out.println(languages);
 
-        if (languages == null)
+        if (languages != null)
             return;
 
         for (IdentifiableLanguage language : languages.getLanguages()) {
@@ -84,15 +93,6 @@ public class LaunchActivity extends AppCompatActivity implements LanguageTransla
 
             languageViewModel.insert(dbLanguage);
         }
-
-        languageViewModel.getLive("Afrikaans").observe(this, language -> {
-            System.out.println(language);
-        });
-
-        languageViewModel.getAllWords().observe(this,  languageList -> {
-            System.out.println(languageList);
-        });
-
 
     }
 
