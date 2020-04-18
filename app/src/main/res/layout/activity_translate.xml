@@ -246,6 +246,7 @@
                                 android:fontFamily="@font/baumans"
                                 android:gravity="center"
                                 android:textSize="18sp"
+                                android:layout_margin="5dp"
                                 tools:text="sasas" />
 
                         </LinearLayout>
@@ -275,6 +276,7 @@
                                 android:fontFamily="@font/baumans"
                                 android:gravity="center"
                                 android:textSize="18sp"
+                                android:layout_margin="5dp"
                                 tools:text="sasas" />
 
                         </LinearLayout>

@@ -89,6 +89,16 @@ public class PhraseDisplayAdapter extends RecyclerView.Adapter<PhraseDisplayAdap
         return 0;
     }
 
+    @Override
+    public long getItemId(int position) {
+        return position;
+    }
+
+    @Override
+    public int getItemViewType(int position) {
+        return  position;
+    }
+
     public class PhraseDisplayViewHolder extends RecyclerView.ViewHolder {
         public View view;
         public TextView name;

@@ -29,7 +29,7 @@ public class LanguageSubscriptionViewModel extends AndroidViewModel {
     public LiveData<List<LanguageSubscription>> getSubscribe() {
         return  languageSubscriptionRepository.getSubscribe();
     }
-    
+
     public void insertAll(List<LanguageSubscription> languageSubscriptionList) {
 
         DbHandler.databaseWriteExecutor.execute(() -> {
