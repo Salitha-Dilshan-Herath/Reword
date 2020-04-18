@@ -15,16 +15,14 @@ import java.util.List;
 @Dao
 public interface LanguageSubscriptionDao {
 
-    @Insert(onConflict = OnConflictStrategy.IGNORE)
-    void insert(LanguageSubscription language);
-
-    @Query("DELETE FROM language_subscription")
-    void delete();
-
-    @Query("SELECT * FROM language_subscription ")
+    @Query("SELECT * FROM language_subscription")
     LiveData<List<LanguageSubscription>> getAll();
 
-    @Delete
-    void deleteModel(LanguageSubscription languageSubscription);
+    @Query("SELECT * FROM language_subscription where isSub=1")
+    LiveData<List<LanguageSubscription>> getSubscribe();
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    void insertAll(List<LanguageSubscription> languageSubscriptionList);
+
 
 }

@@ -22,17 +22,17 @@ public class LanguageSubscriptionRepository {
         return  languageSubscriptionDao.getAll();
     }
 
-    public void insert(LanguageSubscription language) {
+    public LiveData<List<LanguageSubscription>> getSubscribe() {
+        return  languageSubscriptionDao.getSubscribe();
+    }
+
+
+    public void insertAll(List<LanguageSubscription> languageSubscriptionList) {
 
         DbHandler.databaseWriteExecutor.execute(() -> {
-            languageSubscriptionDao.delete();
-            languageSubscriptionDao.insert(language);
+
+            languageSubscriptionDao.insertAll(languageSubscriptionList);
         });
     }
 
-    public void delete() {
-        DbHandler.databaseWriteExecutor.execute(() -> {
-            languageSubscriptionDao.delete();
-        });
-    }
 }

@@ -86,31 +86,23 @@ public class LanguageSubscriptionActivity extends AppCompatActivity implements L
 
                 System.out.println("update click");
 
-                languageSubscriptionViewModel.delete();
                 boolean isSuccess = true;
 
-                languageSubscriptionViewModel.getAll().observe(LanguageSubscriptionActivity.this, languageSubscriptions -> {
-                    System.out.println("clear count");
-                    System.out.println(languageSubscriptions.size());
-                });
-
+                List<LanguageSubscription> languagesList = new ArrayList<>();
                 for(LanguageDisplay languageDisplay: languageSubscriptionAdapter.getLanguageDisplayList()){
 
-
-                    if (languageDisplay.isSubscribe()){
-                        System.out.println(languageDisplay.toString());
-
-                        LanguageSubscription language = new LanguageSubscription();
-                        language.setName(languageDisplay.getName());
-                        language.setLan_code(languageDisplay.getLanCode());
-                        languageSubscriptionViewModel.insert(language);
-
-                    }
+                    LanguageSubscription language = new LanguageSubscription();
+                    language.setName(languageDisplay.getName());
+                    language.setLan_code(languageDisplay.getLanCode());
+                    language.setIsSub(languageDisplay.isSubscribe());
+                    languagesList.add(language);
                 }
 
+                languageSubscriptionViewModel.insertAll(languagesList);
                 if (isSuccess){
                     Toast.makeText(LanguageSubscriptionActivity.this, "Your subscription success",
                             Toast.LENGTH_LONG).show();
+
                 }else {
                     Toast.makeText(LanguageSubscriptionActivity.this, "Your subscription fail",
                             Toast.LENGTH_LONG).show();
@@ -172,11 +164,10 @@ public class LanguageSubscriptionActivity extends AppCompatActivity implements L
                         }
 
                         for(LanguageSubscription languageSubscription : languageSubscriptions){
-
                             LanguageDisplay findObj = findObject(languageSubscription.getName());
 
                             if (findObj != null){
-                                findObj.setSubscribe(true);
+                                findObj.setSubscribe(languageSubscription.getIsSub());
                             }
                         }
 

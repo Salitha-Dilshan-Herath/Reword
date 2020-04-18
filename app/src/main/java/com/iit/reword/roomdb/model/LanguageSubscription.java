@@ -16,6 +16,9 @@ public class LanguageSubscription {
     @ColumnInfo(name = "lan_code")
     public String lan_code;
 
+    @ColumnInfo(name = "isSub")
+    public boolean isSub;
+
     @NonNull
     public String getName() {
         return name;
@@ -32,5 +35,13 @@ public class LanguageSubscription {
 
     public void setLan_code(String lan_code) {
         this.lan_code = lan_code;
+    }
+
+    public boolean getIsSub() {
+        return isSub;
+    }
+
+    public void setIsSub(boolean isSub) {
+        this.isSub = isSub;
     }
 }

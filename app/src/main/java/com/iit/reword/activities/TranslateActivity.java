@@ -106,7 +106,7 @@ public class TranslateActivity extends AppCompatActivity implements AdapterClick
         constraintViwExtra.setVisibility(View.INVISIBLE);
         imgRefresh.setVisibility(View.INVISIBLE);
         imagePronounceRefresh.setVisibility(View.INVISIBLE);
-        
+
 
 
         final LiveData<List<Phrase>> phrasesListObservable  = phraseViewModel.getAll();
@@ -218,7 +218,7 @@ public class TranslateActivity extends AppCompatActivity implements AdapterClick
     private void setSpinnerValues() {
 
         ArrayList stringList = new ArrayList();
-        final LiveData<List<LanguageSubscription>> languageSubListObservable  = languageSubscriptionViewModel.getAll();
+        final LiveData<List<LanguageSubscription>> languageSubListObservable  = languageSubscriptionViewModel.getSubscribe();
 
         //set data to spinner
         languageSubListObservable.observe(this, new Observer<List<LanguageSubscription>>() {
@@ -372,7 +372,7 @@ public class TranslateActivity extends AppCompatActivity implements AdapterClick
                 imgRefresh.setVisibility(View.INVISIBLE);
                 imgRefresh.clearAnimation();
 
-                Toast.makeText(TranslateActivity.this, "Failed translation",
+                Toast.makeText(TranslateActivity.this, "Sorry Failed translation",
                         Toast.LENGTH_LONG).show();
             }
         }else {
