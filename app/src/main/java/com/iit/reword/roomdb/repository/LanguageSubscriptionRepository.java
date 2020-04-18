@@ -23,7 +23,9 @@ public class LanguageSubscriptionRepository {
     }
 
     public void insert(LanguageSubscription language) {
+
         DbHandler.databaseWriteExecutor.execute(() -> {
+            languageSubscriptionDao.delete();
             languageSubscriptionDao.insert(language);
         });
     }

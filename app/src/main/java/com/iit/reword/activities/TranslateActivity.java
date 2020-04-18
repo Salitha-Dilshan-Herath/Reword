@@ -106,9 +106,8 @@ public class TranslateActivity extends AppCompatActivity implements AdapterClick
         constraintViwExtra.setVisibility(View.INVISIBLE);
         imgRefresh.setVisibility(View.INVISIBLE);
         imagePronounceRefresh.setVisibility(View.INVISIBLE);
-        btnTranslate.setEnabled(false);
+        
 
-        LanguageTranslatorService.getShareInstance().languageTranslatorServiceImpl = TranslateActivity.this;
 
         final LiveData<List<Phrase>> phrasesListObservable  = phraseViewModel.getAll();
 
@@ -140,6 +139,12 @@ public class TranslateActivity extends AppCompatActivity implements AdapterClick
             @Override
             public void onClick(View view) {
 
+                if (selectedLanguage == null){
+                    Toast.makeText(TranslateActivity.this, "Please select a language from dropdown",
+                            Toast.LENGTH_LONG).show();
+                    return;
+                }
+
                 if (txtSelectedPhraseText.getText().toString().equals("")){
                     Toast.makeText(TranslateActivity.this, "Please select phrase / word",
                             Toast.LENGTH_LONG).show();
@@ -169,6 +174,7 @@ public class TranslateActivity extends AppCompatActivity implements AdapterClick
                 constraintViwExtra.setVisibility(View.INVISIBLE);
                 btnTranslate.setVisibility(View.VISIBLE);
                 txtTranslatedPhrase.setText("");
+
                 cardViewPhrases.setVisibility(View.VISIBLE);
             }
 
@@ -276,6 +282,7 @@ public class TranslateActivity extends AppCompatActivity implements AdapterClick
         translate.setP_id(selectedPhrase.pid);
         translate.setLanguageId(selectedLanguage.getName());
         translate.setTranslatePhrase(txtTranslatedPhrase.getText().toString().toLowerCase());
+        LanguageTranslatorService.getShareInstance().languageTranslatorServiceImpl = TranslateActivity.this;
 
         final LiveData<Translate> isExistsObservable  = translateViewModel.isExistsPhrase(translate.getP_id(),translate.getLanguageId());
 
@@ -330,7 +337,6 @@ public class TranslateActivity extends AppCompatActivity implements AdapterClick
             constraintViwExtra.setVisibility(View.INVISIBLE);
             txtTranslatedPhrase.setText("");
             btnTranslate.setVisibility(View.VISIBLE);
-            btnTranslate.setEnabled(true);
             txtSelectedPhraseText.setText(phrase.getPhrase());
         }
 

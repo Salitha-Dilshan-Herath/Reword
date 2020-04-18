@@ -2,6 +2,7 @@ package com.iit.reword.roomdb.dao;
 
 import androidx.lifecycle.LiveData;
 import androidx.room.Dao;
+import androidx.room.Delete;
 import androidx.room.Insert;
 import androidx.room.OnConflictStrategy;
 import androidx.room.Query;
@@ -22,5 +23,8 @@ public interface LanguageSubscriptionDao {
 
     @Query("SELECT * FROM language_subscription ")
     LiveData<List<LanguageSubscription>> getAll();
+
+    @Delete
+    void deleteModel(LanguageSubscription languageSubscription);
 
 }

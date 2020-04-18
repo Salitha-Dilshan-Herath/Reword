@@ -229,5 +229,10 @@ public class TranslateOfflineActivity extends AppCompatActivity implements Langu
     @Override
     public void isSuccessSpeech(Boolean status) {
         btnPronounsAll.setEnabled(true);
+
+        if(!status){
+            Toast.makeText(TranslateOfflineActivity.this, "Pronunciation failed",
+                    Toast.LENGTH_LONG).show();
+        }
     }
 }

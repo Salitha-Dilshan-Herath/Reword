@@ -57,11 +57,12 @@ class SynthesisTask extends AsyncTask<String, Void, Boolean> {
         }
 
         System.out.println(voice_type);
-        SynthesizeOptions synthesizeOptions = new SynthesizeOptions.Builder().text(strings[0])
-                                                                                  .voice(voice_type)
-                                                                                  .accept(HttpMediaType.AUDIO_WAV).build();
+
 
         try {
+            SynthesizeOptions synthesizeOptions = new SynthesizeOptions.Builder().text(strings[0])
+                    .voice(voice_type)
+                    .accept(HttpMediaType.AUDIO_WAV).build();
             TextToSpeechService.getShareInstance().player.playStream(WatsonSdk.getSharedInstance().getTextToSpeechService().synthesize(synthesizeOptions).execute().getResult());
         }catch (Exception e){
             e.printStackTrace();
