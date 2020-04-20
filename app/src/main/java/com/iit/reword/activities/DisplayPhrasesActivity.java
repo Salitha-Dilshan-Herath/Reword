@@ -12,12 +12,8 @@ import android.widget.TextView;
 
 import com.iit.reword.R;
 import com.iit.reword.adapters.PhraseDisplayAdapter;
-import com.iit.reword.roomdb.DbHandler;
-import com.iit.reword.roomdb.model.Phrase;
 import com.iit.reword.roomdb.viewModel.PhraseViewModel;
-import com.iit.reword.utility.Constant;
 
-import java.util.List;
 
 public class DisplayPhrasesActivity extends AppCompatActivity {
 
@@ -28,6 +24,7 @@ public class DisplayPhrasesActivity extends AppCompatActivity {
     //MARK: Instance Variable
     private PhraseViewModel phraseViewModel;
 
+    //MARK: LIfe Cycle methods
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -36,6 +33,7 @@ public class DisplayPhrasesActivity extends AppCompatActivity {
         setupView();
     }
 
+    //MARK: Custom Methods
     private void setupView(){
 
         phraseViewModel = new ViewModelProvider(this).get(PhraseViewModel.class);
@@ -45,6 +43,7 @@ public class DisplayPhrasesActivity extends AppCompatActivity {
 
         txtError.setVisibility(View.INVISIBLE);
 
+        //load data from database
         phraseViewModel.getAll().observe(this, phrases -> {
 
             if (phrases.size() == 0){

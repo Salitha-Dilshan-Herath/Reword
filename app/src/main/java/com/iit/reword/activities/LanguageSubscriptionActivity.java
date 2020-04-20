@@ -20,16 +20,13 @@ import com.ibm.watson.language_translator.v3.model.IdentifiableLanguages;
 import com.ibm.watson.language_translator.v3.model.TranslationResult;
 import com.iit.reword.R;
 import com.iit.reword.adapters.LanguageSubscriptionAdapter;
-import com.iit.reword.adapters.PhraseEditAdapter;
 import com.iit.reword.model.LanguageDisplay;
 import com.iit.reword.model.TranslateModel;
-import com.iit.reword.roomdb.DbHandler;
 import com.iit.reword.roomdb.model.Language;
 import com.iit.reword.roomdb.model.LanguageSubscription;
 import com.iit.reword.roomdb.viewModel.LanguageSubscriptionViewModel;
 import com.iit.reword.roomdb.viewModel.LanguageViewModel;
 import com.iit.reword.services.LanguageTranslatorService;
-import com.iit.reword.utility.Constant;
 import com.iit.reword.utility.Utility;
 import com.iit.reword.utility.interfaces.LanguageTranslatorServiceImpl;
 
@@ -65,19 +62,21 @@ public class LanguageSubscriptionActivity extends AppCompatActivity implements L
         languageViewModel             = new ViewModelProvider(this).get(LanguageViewModel.class);
         languageSubscriptionViewModel = new ViewModelProvider(this).get(LanguageSubscriptionViewModel.class);
 
-        recyclerView  = findViewById(R.id.recycleViewLanguageSubscription);
-        viwErrorPanel = findViewById(R.id.viwErrorPanel);
-        btnRetry      = findViewById(R.id.btnRetry);
+        recyclerView    = findViewById(R.id.recycleViewLanguageSubscription);
+        viwErrorPanel   = findViewById(R.id.viwErrorPanel);
+        btnRetry        = findViewById(R.id.btnRetry);
+        btnUpdate       = findViewById(R.id.btnUpdate);
         progressBarWait = findViewById(R.id.progressBarWait);
+
         viwErrorPanel.setVisibility(View.INVISIBLE);
         progressBarWait.setVisibility(View.INVISIBLE);
 
-        btnUpdate = findViewById(R.id.btnUpdate);
 
         loadData();
         setupListeners();
     }
 
+    //MARK: - setup Button Listeners
     private void setupListeners() {
 
         btnUpdate.setOnClickListener(new View.OnClickListener() {
@@ -100,11 +99,11 @@ public class LanguageSubscriptionActivity extends AppCompatActivity implements L
 
                 languageSubscriptionViewModel.insertAll(languagesList);
                 if (isSuccess){
-                    Toast.makeText(LanguageSubscriptionActivity.this, "Your subscription success",
+                    Toast.makeText(LanguageSubscriptionActivity.this, "Your subscription is successfully",
                             Toast.LENGTH_LONG).show();
 
                 }else {
-                    Toast.makeText(LanguageSubscriptionActivity.this, "Your subscription fail",
+                    Toast.makeText(LanguageSubscriptionActivity.this, "Your subscription is failed",
                             Toast.LENGTH_LONG).show();
                 }
             }
@@ -132,6 +131,7 @@ public class LanguageSubscriptionActivity extends AppCompatActivity implements L
         });
     }
 
+    //MARK: - get data from database
     private void loadData(){
 
         final LiveData<List<Language>> languageListObservable  = languageViewModel.getAllWords();

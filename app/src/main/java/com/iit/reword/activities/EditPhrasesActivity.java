@@ -16,13 +16,10 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.textfield.TextInputLayout;
 import com.iit.reword.R;
-import com.iit.reword.adapters.PhraseDisplayAdapter;
 import com.iit.reword.adapters.PhraseEditAdapter;
-import com.iit.reword.roomdb.DbHandler;
 import com.iit.reword.roomdb.model.Phrase;
 import com.iit.reword.roomdb.viewModel.PhraseViewModel;
 import com.iit.reword.roomdb.viewModel.TranslateViewModel;
-import com.iit.reword.utility.Constant;
 import com.iit.reword.utility.interfaces.EditPhraseRadioClickListener;
 import com.iit.reword.utility.Utility;
 
@@ -68,6 +65,7 @@ public class EditPhrasesActivity extends AppCompatActivity implements EditPhrase
         btnSave             = findViewById(R.id.btnSavePhrase);
         viwErrorPanel       = findViewById(R.id.viwErrorPanel);
         editTextInputLayout.getEditText().setEnabled(false);
+
         btnSave.setEnabled(false);
         viwErrorPanel.setVisibility(View.INVISIBLE);
 

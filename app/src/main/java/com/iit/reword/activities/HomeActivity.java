@@ -1,9 +1,7 @@
 package com.iit.reword.activities;
 
-import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -14,6 +12,7 @@ import com.iit.reword.utility.Typewriter;
 
 public class HomeActivity extends AppCompatActivity {
 
+    //MARK: - UI Elements
     private Typewriter txtHeader;
     private Button btnAddPhrases;
     private Button btnDisplayPhrase;
@@ -21,16 +20,17 @@ public class HomeActivity extends AppCompatActivity {
     private Button btnSubscription;
     private Button btnTranslator;
 
+    //MARK: + Life Cycle events
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
 
-        setupview();
+        setupView();
     }
 
-
-    private void setupview() {
+    //MARK: - Setup activity
+    private void setupView() {
         btnAddPhrases    = findViewById(R.id.btnAddPhrases);
         btnDisplayPhrase = findViewById(R.id.btnDisplayPhrase);
         btnEditPhrase    = findViewById(R.id.btnEditPhrases);
@@ -38,12 +38,16 @@ public class HomeActivity extends AppCompatActivity {
         btnTranslator    = findViewById(R.id.btnTranslator);
         txtHeader        = findViewById(R.id.txtHeader);
 
+        //header animation
         txtHeader.setCharacterDelay(150);
         txtHeader.animateText("Reword");
+
+        //Invoke listeners
         setupListeners();
 
     }
 
+    //MARK: - Setup Button Click listeners
     private void setupListeners(){
 
         btnAddPhrases.setOnClickListener(new View.OnClickListener() {

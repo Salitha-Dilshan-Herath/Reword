@@ -36,7 +36,6 @@ import com.iit.reword.roomdb.viewModel.PhraseViewModel;
 import com.iit.reword.roomdb.viewModel.TranslateViewModel;
 import com.iit.reword.services.LanguageTranslatorService;
 import com.iit.reword.services.TextToSpeechService;
-import com.iit.reword.utility.Constant;
 import com.iit.reword.utility.Utility;
 import com.iit.reword.utility.interfaces.AdapterClickListener;
 import com.iit.reword.utility.interfaces.LanguageTranslatorServiceImpl;
@@ -81,7 +80,7 @@ public class TranslateActivity extends AppCompatActivity implements AdapterClick
         setupView();
     }
 
-    //MARK: Custom methods
+    //MARK: setup activity
     private void setupView(){
 
         phraseViewModel               = new ViewModelProvider(this).get(PhraseViewModel.class);
@@ -107,8 +106,6 @@ public class TranslateActivity extends AppCompatActivity implements AdapterClick
         imgRefresh.setVisibility(View.INVISIBLE);
         imagePronounceRefresh.setVisibility(View.INVISIBLE);
 
-
-
         final LiveData<List<Phrase>> phrasesListObservable  = phraseViewModel.getAll();
 
         phrasesListObservable.observe(this, new Observer<List<Phrase>>() {
@@ -133,6 +130,7 @@ public class TranslateActivity extends AppCompatActivity implements AdapterClick
 
     }
 
+    //MARK: setup buttons and dropdown click listeners
     private void setupListeners(){
 
         btnTranslate.setOnClickListener(new View.OnClickListener() {
@@ -252,6 +250,7 @@ public class TranslateActivity extends AppCompatActivity implements AdapterClick
         });
     }
 
+    //MARK: Save translate phrase in database
     private void savePhrase() {
 
         Translate translate = new Translate();
@@ -276,6 +275,7 @@ public class TranslateActivity extends AppCompatActivity implements AdapterClick
 
     }
 
+    //MARK: Translate phrase
     private void translatePhrase() {
 
         Translate translate = new Translate();
@@ -285,6 +285,7 @@ public class TranslateActivity extends AppCompatActivity implements AdapterClick
         LanguageTranslatorService.getShareInstance().languageTranslatorServiceImpl = TranslateActivity.this;
 
         final LiveData<Translate> isExistsObservable  = translateViewModel.isExistsPhrase(translate.getP_id(),translate.getLanguageId());
+        TextToSpeechService.getShareInstance().textSpeechServiceImpl = TranslateActivity.this;
 
         isExistsObservable.observe(this, new Observer<Translate>() {
             @Override
@@ -321,10 +322,6 @@ public class TranslateActivity extends AppCompatActivity implements AdapterClick
 
             }
         });
-
-
-
-        TextToSpeechService.getShareInstance().textSpeechServiceImpl = TranslateActivity.this;
     }
 
     //MARK: Adapter Cell click Listener
@@ -372,7 +369,7 @@ public class TranslateActivity extends AppCompatActivity implements AdapterClick
                 imgRefresh.setVisibility(View.INVISIBLE);
                 imgRefresh.clearAnimation();
 
-                Toast.makeText(TranslateActivity.this, "Sorry Failed translation",
+                Toast.makeText(TranslateActivity.this, "Sorry unable to translate your phrase/word, Try another phrase/word",
                         Toast.LENGTH_LONG).show();
             }
         }else {
@@ -380,7 +377,7 @@ public class TranslateActivity extends AppCompatActivity implements AdapterClick
             imgRefresh.setVisibility(View.INVISIBLE);
             imgRefresh.clearAnimation();
 
-            Toast.makeText(TranslateActivity.this, "Failed translation",
+            Toast.makeText(TranslateActivity.this, "Sorry unable to translate your phrase/word, Try another phrase/word",
                     Toast.LENGTH_LONG).show();
         }
     }

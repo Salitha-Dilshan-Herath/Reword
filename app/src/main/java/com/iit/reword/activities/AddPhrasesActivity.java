@@ -8,16 +8,13 @@ import androidx.lifecycle.ViewModelProvider;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
 import com.google.android.material.textfield.TextInputLayout;
 import com.iit.reword.R;
-import com.iit.reword.roomdb.DbHandler;
 import com.iit.reword.roomdb.model.Phrase;
 import com.iit.reword.roomdb.viewModel.PhraseViewModel;
-import com.iit.reword.utility.Constant;
 
 public class AddPhrasesActivity extends AppCompatActivity implements TextWatcher {
 
@@ -78,7 +75,7 @@ public class AddPhrasesActivity extends AppCompatActivity implements TextWatcher
 
                 System.out.println(phrase);
                 if (phrase !=null){
-                    Toast.makeText(AddPhrasesActivity.this, txtphrase +" already exists, Try another phrase",
+                    Toast.makeText(AddPhrasesActivity.this, txtphrase +" already exists, Try another phrase/word",
                             Toast.LENGTH_LONG).show();
                     return;
                 }
@@ -88,7 +85,7 @@ public class AddPhrasesActivity extends AppCompatActivity implements TextWatcher
                 phraseViewModel.insert(phraseObj);
 
                 phraseTextInputLayout.getEditText().setText(null);
-                Toast.makeText(AddPhrasesActivity.this, "Phrase added success",
+                Toast.makeText(AddPhrasesActivity.this, "Phrase added successfully",
                         Toast.LENGTH_LONG).show();
 
 

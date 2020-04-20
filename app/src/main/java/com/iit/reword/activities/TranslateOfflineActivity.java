@@ -140,7 +140,6 @@ public class TranslateOfflineActivity extends AppCompatActivity implements Langu
 
                              if(index == phrases.size() -1 && isAlreadyTranslate){
                                  setupRecycleView(translateModelList);
-                                 System.out.println("Translate Complete Done......!  with isAlreadyTranslate");
                                  pd.dismiss();
                              }
                          }
@@ -196,6 +195,7 @@ public class TranslateOfflineActivity extends AppCompatActivity implements Langu
         System.out.println("Save data to db success " + translate.toString());
     }
 
+    //MARK: Language Translate service implement
     @Override
     public void getLanguageList(IdentifiableLanguages languages) {
 
@@ -214,18 +214,19 @@ public class TranslateOfflineActivity extends AppCompatActivity implements Langu
         savePhrase(model);
 
         if(model.getListIndex() == phraseList.size() - 1){
-            System.out.println(translateModelList.size() + " Translate Complete Done......! " + model.getTranslatedWord());
             setupRecycleView(translateModelList);
             pd.dismiss();
         }
     }
 
+    //MARK: Recycle view click event implementation
     @Override
     public void onCellClick(TranslateModel phrase, int index) {
 
         this.selectedModel = phrase;
     }
 
+    //MARK: Text to Speech service implement
     @Override
     public void isSuccessSpeech(Boolean status) {
         btnPronounsAll.setEnabled(true);

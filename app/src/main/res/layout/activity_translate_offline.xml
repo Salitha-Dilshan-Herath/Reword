@@ -56,12 +56,11 @@
                 android:id="@+id/constraintLayout29"
                 android:layout_width="0dp"
                 android:layout_height="0dp"
-                android:background="#E81123"
+                android:background="#FFFFFF"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHeight_percent=".08"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                >
+                app:layout_constraintTop_toTopOf="parent">
 
                 <TextView
                     android:id="@+id/textView6"

@@ -1,11 +1,9 @@
 package com.iit.reword.activities;
 
-import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.widget.ImageView;
-import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -20,7 +18,6 @@ import com.iit.reword.model.TranslateModel;
 import com.iit.reword.roomdb.model.Language;
 import com.iit.reword.roomdb.viewModel.LanguageViewModel;
 import com.iit.reword.services.LanguageTranslatorService;
-import com.iit.reword.utility.Constant;
 import com.iit.reword.utility.Utility;
 import com.iit.reword.utility.interfaces.LanguageTranslatorServiceImpl;
 
